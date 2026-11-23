@@ -1,0 +1,69 @@
+{
+  "success": true,
+  "data": {
+    "websiteId": "fc8e1763db7249b6",
+    "productType": "photobouquet",
+    "configVersion": 1,
+    "enableRain": true,
+    "enableLetter": true,
+    "bouquetImages": [
+      "/imgnew/1.jpg",
+      "/imgnew/2.jpg",
+      "/imgnew/3.jpg",
+      "/imgnew/4.jpg",
+      "/imgnew/5.jpg",
+      "/imgnew/6.jpg"
+    ],
+    "bouquetCutouts": [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false
+    ],
+    "flyingTexts": [
+      "HÌN SÌ GÒN CỦA ANH 💖",
+      "Happy Birthday Hìn Sì Gòn nhó 🎂",
+      "Chúc mừng sinh nhật tuổi 19 ✨",
+      "24/11/2007 - Thiên thần Hìn Sì Gòn 🌸",
+      "Chúc Hìn Sì Gòn luôn xinh đẹp rạng rỡ 🥰",
+      "Cảm ơn vì em đã đến bên anh 💕",
+      "Mong mọi điều ước của em thành hiện thực ✨",
+      "Anh sẽ luôn ở đây che chở cho em 🌹",
+      "Yêu Hìn Sì Gòn nhất trên đời 💗",
+      "💗💗💗 HÌN SÌ GÒN 💗💗💗"
+    ],
+    "flyingImages": [
+      "/imgnew/1.jpg",
+      "/imgnew/2.jpg",
+      "/imgnew/3.jpg",
+      "/imgnew/4.jpg",
+      "/imgnew/5.jpg",
+      "/imgnew/6.jpg",
+      "/imgnew/1795342524355_4727738334538025247_4727738334538025247_4db7db0bdd3dd3c7c3060e21cbd7e36d.jpg",
+      "/imgnew/1795342684448_4727738334538025247_4727738334538025247_9cf55dbc8a08f2a57e6fe10b8d5ee56c.jpg",
+      "/imgnew/1795342684523_4727738334538025247_4727738334538025247_5b479a4c0708b65322bd8eef472a0212.jpg",
+      "/imgnew/1795342684540_4727738334538025247_4727738334538025247_f96393cae4133a6081bf8f5f7014631f.jpg",
+      "/imgnew/1795342684549_4727738334538025247_4727738334538025247_97730d787fcd340e0fea4de23278f63e.jpg",
+      "/imgnew/1795342684565_4727738334538025247_4727738334538025247_69149076637095635e7a71d2b6624180.jpg",
+      "/imgnew/1795342684580_4727738334538025247_4727738334538025247_e4c32738a945ad4dd674c93b9ca2c871.jpg",
+      "/imgnew/1795342684590_4727738334538025247_4727738334538025247_ea6aaeecb8e48e7655f10b86c2166241.jpg"
+    ],
+    "letter": {
+      "text": "Gửi em - Hìn Sì Gòn của anh 💖\n\nChúc mừng sinh nhật tuổi 19 cô gái tuyệt vời nhất trần đời! 🎂✨\n\n24/11/2007 là một ngày thật đặc biệt, vì ngày này thế giới đã mang một thiên thần nhỏ đến với cuộc sống, và thật may mắn vì sau này người ấy đã trở thành một phần không thể thiếu trong cuộc đời anh.\n\nBước sang tuổi mới, anh chúc Hìn Sì Gòn luôn nở nụ cười thật tươi trên môi, luôn bình an, hạnh phúc và gặt hái được mọi ước mơ của mình. Hãy luôn tự tin, yêu đời và rạng rỡ như chính những bông hoa đẹp nhất nhé!\n\nAnh không hứa sẽ mang cho em cả thế giới, nhưng anh hứa sẽ luôn ở bên cạnh, lắng nghe, che chở và dành trọn tình yêu thương cho em mỗi ngày.\n\nChúc mừng sinh nhật Hìn Sì Gòn nhó! Yêu em nhất trên đời! 💗🎂🎉",
+      "photo": "/imgnew/1.jpg",
+      "envelope": {
+        "topLine": "Happy Birthday 🎂",
+        "headline": "Hìn Sì Gòn",
+        "bottomLine": "24.11.2007 💖"
+      }
+    },
+    "bgMusic": "/cdn_media/audio-mv9ff9kg-7edf2bd9.mp3",
+    "palette": "hongdon",
+    "flyingHearts": true,
+    "expiresAt": null,
+    "createdAt": "2026-10-15T10:59:26.590Z",
+    "showWatermark": false
+  }
+}
