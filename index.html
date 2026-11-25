@@ -562,13 +562,24 @@
         scrollbar-width: none;
         -ms-overflow-style: none;
       }
-      .bakery-container::-webkit-scrollbar {
+      .bakery-container::-webkit-scrollbar,
+      .playground-container::-webkit-scrollbar {
         display: none;
+      }
+      .playground-container {
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
+        scroll-behavior: smooth;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
       }
 
       @media (max-height: 880px) {
+        .playground-container {
+          padding-top: 84px !important;
+        }
         .bakery-container {
-          padding-top: 56px !important;
+          padding-top: 78px !important;
         }
         .bakery-container h1 {
           font-size: 2.3rem !important;
