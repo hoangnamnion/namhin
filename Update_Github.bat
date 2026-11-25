@@ -35,7 +35,7 @@ if errorlevel 1 (
 
 echo [1/5] Dong bo tu: %SOURCE%
 if /i "%SOURCE%"=="%REPO%" goto sync_done
-robocopy "%SOURCE%" "%REPO%" /E /COPY:DAT /DCOPY:DAT /R:1 /W:1 /XD ".git"
+robocopy "%SOURCE%" "%REPO%" /E /COPY:DAT /DCOPY:DAT /R:1 /W:1 /XD ".git" /XF "Update_Github.bat"
 if errorlevel 8 (
   echo [LOI] Robocopy that bai.
   pause
