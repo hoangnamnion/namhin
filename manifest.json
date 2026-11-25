@@ -1,1 +1,15 @@
-{ "name": "Thỏ Land", "short_name": "Thỏ Land", "display": "standalone", "background_color": "#FFE4EC", "theme_color": "#FF7EB6", "start_url": "/", "icons": [{ "src": "/favicon.png", "sizes": "180x180", "type": "image/png" }] }
+{
+  "name": "Đảo của Hìn Sì Gòn",
+  "short_name": "Đảo của Hìn",
+  "display": "standalone",
+  "background_color": "#FFE4EC",
+  "theme_color": "#FF7EB6",
+  "start_url": "./index.html",
+  "icons": [
+    {
+      "src": "./favicon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}
