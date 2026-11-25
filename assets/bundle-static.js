@@ -4333,7 +4333,7 @@ void main() {
   float e = easeInOut(q);
   vec3 p = mix(aFrom, aTo, e);
   // bay theo đường cong: xoáy quanh trục đứng + phồng ra phía trước, mạnh nhất ở giữa đường
-  float arc = sin(e * 3.14159265);
+  float arc = max(0.0, sin(e * 3.14159265));
   float ang = arc * (0.55 + aSeed * 0.9);
   float c = cos(ang), s = sin(ang);
   p.xz = mat2(c, -s, s, c) * p.xz;
@@ -4341,8 +4341,8 @@ void main() {
   // bung tung ra thành đám mây rồi gom lại (mạnh nhất giữa đường)
   vec3 rnd = vec3(sin(aSeed * 91.7), cos(aSeed * 53.1), sin(aSeed * 27.3 + 1.7));
   vec3 mid = (aFrom + aTo) * 0.5;
-  vec3 dir = normalize(mid * 0.3 + rnd);
-  float spread = pow(arc, 0.65) * uBurst * (3.5 + fract(aSeed * 13.7) * 5.5);
+  vec3 vDir = mid * 0.3 + rnd; vec3 dir = length(vDir) > 0.0001 ? normalize(vDir) : vec3(0.0, 0.0, 1.0);
+  float spread = (arc > 0.0001 ? pow(arc, 0.65) : 0.0) * uBurst * (3.5 + fract(aSeed * 13.7) * 5.5);
   p += dir * spread;
   // lung linh nhẹ (dao động quanh vị trí, không trôi dạt)
   p += vec3(sin(uTime * 1.3 + aSeed * 40.0), cos(uTime * 1.1 + aSeed * 70.0), sin(uTime * 0.9 + aSeed * 25.0)) * 0.022;
