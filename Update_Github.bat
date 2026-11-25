@@ -19,7 +19,15 @@ if not exist "%SOURCE%\" (
   exit /b 1
 )
 
-if not exist "%REPO%\.git\" (
+cd /d "%REPO%" 2>nul
+if errorlevel 1 (
+  echo [LOI] Khong tim thay thu muc repository: %REPO%
+  pause
+  exit /b 1
+)
+
+git rev-parse --is-inside-work-tree >nul 2>&1
+if errorlevel 1 (
   echo [LOI] Khong tim thay Git repository: %REPO%
   pause
   exit /b 1
