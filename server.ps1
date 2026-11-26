@@ -52,37 +52,41 @@ try { Start-Process $Url } catch {}
 try {
     while ($true) {
         $client = $server.AcceptTcpClient()
-        $stream = $client.GetStream()
-        $reader = New-Object System.IO.StreamReader($stream)
-        $line = $reader.ReadLine()
-        if ($line) {
-            $parts = $line.Split(' ')
-            if ($parts.Length -ge 2 -and $parts[0] -eq 'GET') {
-                $rawPath = $parts[1].Split('?')[0].TrimStart('/')
-                if ([string]::IsNullOrEmpty($rawPath)) { $rawPath = "index.html" }
-                $rawPath = [System.Uri]::UnescapeDataString($rawPath).Replace('/', '\')
-                $fullPath = Join-Path $Root $rawPath
+        try {
+            $stream = $client.GetStream()
+            $reader = New-Object System.IO.StreamReader($stream)
+            $line = $reader.ReadLine()
+            if ($line) {
+                $parts = $line.Split(' ')
+                if ($parts.Length -ge 2 -and ($parts[0] -eq 'GET' -or $parts[0] -eq 'HEAD')) {
+                    $rawPath = $parts[1].Split('?')[0].TrimStart('/')
+                    if ([string]::IsNullOrEmpty($rawPath)) { $rawPath = "index.html" }
+                    $rawPath = [System.Uri]::UnescapeDataString($rawPath).Replace('/', '\')
+                    $fullPath = Join-Path $Root $rawPath
 
-                if (Test-Path $fullPath -PathType Leaf) {
-                    $ext = [System.IO.Path]::GetExtension($fullPath).ToLower()
-                    $mime = if ($MimeTypes.ContainsKey($ext)) { $MimeTypes[$ext] } else { "application/octet-stream" }
-                    $bytes = [System.IO.File]::ReadAllBytes($fullPath)
-                    $header = "HTTP/1.1 200 OK`r`nContent-Type: $mime`r`nContent-Length: $($bytes.Length)`r`nAccess-Control-Allow-Origin: *`r`nConnection: close`r`n`r`n"
-                    $headerBytes = [System.Text.Encoding]::UTF8.GetBytes($header)
-                    $stream.Write($headerBytes, 0, $headerBytes.Length)
-                    $stream.Write($bytes, 0, $bytes.Length)
-                } else {
-                    $body = "404 Not Found: $rawPath"
-                    $header = "HTTP/1.1 404 Not Found`r`nContent-Type: text/plain; charset=utf-8`r`nContent-Length: $($body.Length)`r`nConnection: close`r`n`r`n"
-                    $headerBytes = [System.Text.Encoding]::UTF8.GetBytes($header)
-                    $bodyBytes = [System.Text.Encoding]::UTF8.GetBytes($body)
-                    $stream.Write($headerBytes, 0, $headerBytes.Length)
-                    $stream.Write($bodyBytes, 0, $bodyBytes.Length)
+                    if (Test-Path $fullPath -PathType Leaf) {
+                        $ext = [System.IO.Path]::GetExtension($fullPath).ToLower()
+                        $mime = if ($MimeTypes.ContainsKey($ext)) { $MimeTypes[$ext] } else { "application/octet-stream" }
+                        $bytes = [System.IO.File]::ReadAllBytes($fullPath)
+                        $header = "HTTP/1.1 200 OK`r`nContent-Type: $mime`r`nContent-Length: $($bytes.Length)`r`nAccess-Control-Allow-Origin: *`r`nConnection: close`r`n`r`n"
+                        $headerBytes = [System.Text.Encoding]::UTF8.GetBytes($header)
+                        $stream.Write($headerBytes, 0, $headerBytes.Length)
+                        if ($parts[0] -eq 'GET') { $stream.Write($bytes, 0, $bytes.Length) }
+                    } else {
+                        $body = "404 Not Found: $rawPath"
+                        $header = "HTTP/1.1 404 Not Found`r`nContent-Type: text/plain; charset=utf-8`r`nContent-Length: $($body.Length)`r`nConnection: close`r`n`r`n"
+                        $headerBytes = [System.Text.Encoding]::UTF8.GetBytes($header)
+                        $bodyBytes = [System.Text.Encoding]::UTF8.GetBytes($body)
+                        $stream.Write($headerBytes, 0, $headerBytes.Length)
+                        $stream.Write($bodyBytes, 0, $bodyBytes.Length)
+                    }
                 }
             }
+            $stream.Flush()
+        } catch {
+        } finally {
+            try { $client.Close() } catch {}
         }
-        $stream.Flush()
-        $client.Close()
     }
 } finally {
     $server.Stop()
