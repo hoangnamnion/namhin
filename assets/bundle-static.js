@@ -4058,16 +4058,16 @@ var Je=Object.defineProperty;var Qe=(t,a,s)=>a in t?Je(t,a,{enumerable:!0,config
 const W=800,H=480,TX=408,TY=444;
 const cvRef=x.useRef(null),addCoins=Y(e=>e.addCoins);
 const APK_SPECIES=[
-  {id:"clown",name:"Cá Hề Nemo",cn:"小丑鱼",swim:[314,325],caught:[326,331],coins:4,hp:10,r:22,spd:96,wt:26,almanacReg:167,questReg:620,scale:0.95},
-  {id:"bluetang",name:"Cá Đuôi Gai Xanh",cn:"蓝色鱼",swim:[681,692],caught:[693,698],coins:10,hp:16,r:25,spd:90,wt:22,almanacReg:163,questReg:622,scale:0.95},
-  {id:"striped",name:"Cá Thần Tiên Sọc",cn:"蓝白条纹鱼",swim:[266,277],caught:[278,283],coins:10,hp:18,r:26,spd:84,wt:20,almanacReg:162,questReg:615,scale:0.96},
-  {id:"yellow",name:"Cá Bướm Vàng",cn:"黄色鱼",swim:[332,343],caught:[344,349],coins:15,hp:24,r:27,spd:82,wt:18,almanacReg:160,questReg:614,scale:0.96},
+  {id:"clown",name:"Cá Hề Nemo",cn:"小丑鱼",swim:[681,692],caught:[693,698],coins:4,hp:10,r:22,spd:96,wt:26,almanacReg:167,questReg:620,scale:0.95},
+  {id:"bluetang",name:"Cá Đuôi Gai Xanh",cn:"蓝色鱼",swim:[332,343],caught:[344,349],coins:10,hp:16,r:25,spd:90,wt:22,almanacReg:163,questReg:622,scale:0.95},
+  {id:"striped",name:"Cá Thần Tiên Sọc",cn:"蓝白条纹鱼",swim:[314,325],caught:[326,331],coins:10,hp:18,r:26,spd:84,wt:20,almanacReg:162,questReg:615,scale:0.96},
+  {id:"yellow",name:"Cá Bướm Vàng",cn:"黄色鱼",swim:[266,277],caught:[278,283],coins:15,hp:24,r:27,spd:82,wt:18,almanacReg:160,questReg:614,scale:0.96},
   {id:"longjelly",name:"Sứa Trường Tu",cn:"水母长须",swim:[577,588],caught:[589,594],coins:15,hp:28,r:32,spd:54,wt:14,almanacReg:165,questReg:621,scale:0.92},
   {id:"angler",name:"Cá Đèn Lồng",cn:"鮟鱇鱼",swim:[3,14],caught:[15,20],coins:20,hp:36,r:34,spd:72,wt:13,almanacReg:157,questReg:617,scale:0.9},
   {id:"jelly",name:"Sứa Phát Sáng",cn:"水母",swim:[559,570],caught:[571,576],coins:30,hp:45,r:30,spd:50,wt:11,almanacReg:164,questReg:623,scale:0.95},
   {id:"turtle",name:"Rùa Biển Cổ Đại",cn:"海龟",swim:[248,259],caught:[260,265],coins:40,hp:62,r:38,spd:60,wt:10,almanacReg:159,questReg:624,scale:0.9},
   {id:"rainbow",name:"Cá Cầu Vồng Neon",cn:"霓虹鱼",swim:[663,674],caught:[675,680],coins:50,hp:76,r:38,spd:78,wt:8,almanacReg:166,questReg:618,scale:0.92},
-  {id:"ray",name:"Cá Đuối Hoàng Gia",cn:"鳐鱼",swim:[699,710],caught:[711,716],coins:60,hp:95,r:48,spd:68,wt:7,almanacReg:168,questReg:616,scale:0.88},
+  {id:"ray",name:"Cá Đuối Hoàng Gia",cn:"鳐鱼",swim:[717,728],caught:[729,734],coins:60,hp:95,r:48,spd:68,wt:7,almanacReg:168,questReg:616,scale:0.88},
   {id:"blueshark",name:"Cá Mập Xanh Đại Dương",cn:"大白鲨",swim:[125,136],caught:[137,142],coins:100,hp:150,r:58,spd:86,wt:5,almanacReg:158,questReg:613,scale:0.86,big:!0},
   {id:"hammerhead",name:"Cá Mập Đầu Búa Tím",cn:"虎头鲨",swim:[284,295],caught:[296,307],coins:120,hp:180,r:62,spd:84,wt:4,almanacReg:161,questReg:612,scale:0.86,big:!0},
   {id:"mermaid",name:"Nàng Tiên Cá Vàng",cn:"美人鱼",swim:[31,53],caught:[54,67],coins:150,hp:225,r:64,spd:74,wt:3,almanacReg:173,questReg:619,scale:0.9,isBoss:!0,big:!0}
@@ -4658,11 +4658,12 @@ x.useEffect(()=>{
       const [s0,s1]=sp.swim,len=s1-s0+1;
       const fps=stunT>0?2:(sp.isBoss?11:13);
       const rId=s0+((Math.floor(elapsed*fps)+f.frameOffset)%len);
-      const flipX=f.vx>0?-1:1;
-      const tilt=-Math.atan2(f.vy||0,Math.abs(f.vx)||1)*0.38;
+      const flipX=f.vx>=0?1:-1;
+      const tilt=Math.atan2(f.vy||0,Math.abs(f.vx)||1)*0.4;
       ctx.save();
       if(f.hitT>0)ctx.filter="brightness(1.65) drop-shadow(0 0 6px #FACC15)";
       const sc=sp.scale||1;
+      if(sp.id==="ray")drawReg(rId-18,f.x,f.y,flipX*sc,sc,flipX*tilt,1);
       drawReg(rId,f.x,f.y,flipX*sc,sc,flipX*tilt,1);
       ctx.restore();
       if(stunT>0){
@@ -4681,9 +4682,10 @@ x.useEffect(()=>{
     caughtFx.forEach(cf=>{
       const sp=cf.sp,[c0,c1]=sp.caught,len=c1-c0+1;
       const rId=c0+(Math.floor(cf.t*24)%len);
-      const flipX=cf.vx>0?-1:1;
+      const flipX=cf.vx>=0?1:-1;
       const sc=(sp.scale||1)*(1+Math.sin(cf.t*18)*0.08);
       const alpha=Math.max(0,1-cf.t/0.55);
+      if(sp.id==="ray")drawReg(rId-18,cf.x,cf.y,flipX*sc,sc,0,alpha);
       drawReg(rId,cf.x,cf.y,flipX*sc,sc,0,alpha);
     });
     nets.forEach(n=>{
@@ -5251,64 +5253,129 @@ const W=900,H=520,VPX=450,VPY=128,CAM_H=390,PZ=1.24,ZFAR=24;
 const proj=(wx,wy,z)=>{const zz=Math.max(0.42,z);return{x:VPX+wx/zz,y:VPY+(CAM_H-wy)/zz,s:1/zz};};
 const cvRef=x.useRef(null),addCoins=Y(e=>e.addCoins);
 const APK_CHARS=[
-  {id:"jake",name:"Jake (Sub Surf)",outfit:"Default / Dark / Star",img:"char_jake",altImg:"char_jake_star",port:"p_jake",cost:0,cap:"#DC2626",hood:"#E2E8F0",vest:"#2563EB",pants:"#1E40AF",shoe:"#22C55E",skin:"#FDBA74",perk:"Cân bằng · +5% Điểm"},
-  {id:"tricky",name:"Tricky",outfit:"Beanie & Heart Outfit",img:"char_tricky",altImg:"char_tricky_heart",port:"p_tricky",cost:0,cap:"#DC2626",hood:"#F8FAFC",vest:"#F8FAFC",pants:"#38BDF8",shoe:"#22C55E",skin:"#FDBA74",perk:"Nhanh nhẹn · +10% Nam châm"},
-  {id:"fresh",name:"Fresh",outfit:"Boombox Funk",img:"char_fresh",port:"p_fresh",cost:0,cap:"#451A03",hood:"#65A30D",vest:"#16A34A",pants:"#DC2626",shoe:"#38BDF8",skin:"#B45309",perk:"Nhạc sĩ · +10% Giày Siêu Nhảy"},
-  {id:"spike",name:"Spike",outfit:"Punk Rock",img:"char_spike",port:"p_spike",cost:150,cap:"#DC2626",hood:"#1E293B",vest:"#0F172A",pants:"#2563EB",shoe:"#111827",skin:"#FDBA74",perk:"Punk · +10% Ván Trượt"},
-  {id:"yutani",name:"Yutani",outfit:"Alien Suit",img:"char_yutani",port:"p_yutani",cost:200,cap:"#65A30D",hood:"#84CC16",vest:"#4D7C0F",pants:"#3F6212",shoe:"#15803D",skin:"#FDBA74",perk:"Người ngoài hành tinh · +15% Jetpack"},
-  {id:"lucy",name:"Lucy",outfit:"Cyber Steam Punk",img:"char_lucy",port:"p_lucy",cost:220,cap:"#0284C7",hood:"#F8FAFC",vest:"#BE123C",pants:"#1E3A8A",shoe:"#0F172A",skin:"#FDBA74",perk:"Nổi loạn · +10% Sao ×2"},
-  {id:"tagbot",name:"Tagbot",outfit:"Space Robot",img:"char_tagbot",port:"p_tagbot",cost:260,cap:"#EF4444",hood:"#94A3B8",vest:"#64748B",pants:"#475569",shoe:"#84CC16",skin:"#A3E635",perk:"Robot từ tính · Tự hút xu gần"},
-  {id:"ninja",name:"Ninja",outfit:"Flame Shinobi",img:"char_ninja",altImg:"char_ninja_flame",port:"p_ninja",cost:300,cap:"#1E293B",hood:"#0F172A",vest:"#DC2626",pants:"#1E293B",shoe:"#DC2626",skin:"#FDBA74",perk:"Nhẫn giả · Nhảy kép trên không"},
-  {id:"tasha",name:"Tasha",outfit:"Cheer Star",img:"char_tasha",port:"p_tasha",cost:320,cap:"#FACC15",hood:"#7E22CE",vest:"#A855F7",pants:"#1E293B",shoe:"#DC2626",skin:"#FDBA74",perk:"Cổ vũ · +15% Điểm chạy"},
-  {id:"frank",name:"Frank",outfit:"Bunny Mask VIP",img:"char_frank",port:"p_frank",cost:400,cap:"#F8FAFC",hood:"#1E293B",vest:"#0F172A",pants:"#0F172A",shoe:"#111827",skin:"#F8FAFC",perk:"Thỏ Quý Tộc · Khởi đầu có Khiên"},
-  {id:"king",name:"King",outfit:"Royal Top Run #1",img:"char_king",port:"p_king",cost:450,cap:"#FACC15",hood:"#0284C7",vest:"#38BDF8",pants:"#DC2626",shoe:"#EF4444",skin:"#FDBA74",perk:"Vua Đường Tàu · +20% Xu Vàng"},
-  {id:"zoe",name:"Zoe",outfit:"Neon Biker",img:"char_zoe",port:"p_zoe",cost:500,cap:"#DB2777",hood:"#FACC15",vest:"#EAB308",pants:"#2563EB",shoe:"#A855F7",skin:"#84CC16",perk:"Biker · +20% Tốc độ Ván Trượt"},
-  {id:"brody",name:"Brody",outfit:"Beach Surfer",img:"char_brody",port:"p_jake",cost:550,cap:"#FDE047",hood:"#0F766E",vest:"#115E59",pants:"#DC2626",shoe:"#F59E0B",skin:"#FDBA74",perk:"Lướt sóng · Lướt mượt trên không"},
-  {id:"princek",name:"Prince K",outfit:"Golden Shine Empire",img:"char_princek",altImg:"char_princek_shine",port:"p_princek",cost:800,cap:"#FEF3C7",hood:"#451A03",vest:"#78350F",pants:"#1C1917",shoe:"#FACC15",skin:"#B45309",perk:"Hoàng Tử Vàng · ×2 Xu & +25% Điểm"}
+  {id:"jake",name:"Jake",outfit:"Subway Classic",img:"char_jake",altImg:"char_jake_star",port:"p_jake",runAnim:!0,perk:"Cân bằng · +5% Điểm"},
+  {id:"tricky",name:"Tricky",outfit:"Heart / Classic",img:"char_tricky",altImg:"char_tricky_heart",port:"p_tricky",runAnim:!0,perk:"Nhanh nhẹn · +15% Nam châm"},
+  {id:"fresh",name:"Fresh",outfit:"Boombox Funk",img:"char_fresh",altImg:"char_fresh_funk",port:"p_fresh",runAnim:!0,perk:"Nhạc sĩ · +15% Giày Siêu Nhảy"},
+  {id:"spike",name:"Spike",outfit:"Punk Rock",img:"char_spike",port:"p_spike",runAnim:!0,perk:"Punk · +15% Thời gian Ván"},
+  {id:"yutani",name:"Yutani",outfit:"Alien Suit",img:"char_yutani",altImg:"char_yutani_gadget",port:"p_yutani",runAnim:!0,perk:"Khoa học · +20% Jetpack"},
+  {id:"lucy",name:"Lucy",outfit:"Goth Punk",img:"char_lucy",altImg:"char_lucy_goth",port:"p_lucy",runAnim:!0,perk:"Nổi loạn · +15% Sao ×2"},
+  {id:"tagbot",name:"Tagbot",outfit:"Space Robot",img:"char_tagbot",altImg:"char_tagbot_space",port:"p_tagbot",runAnim:!0,perk:"Robot từ tính · Tự hút xu gần"},
+  {id:"ninja",name:"Ninja",outfit:"Flame Shinobi",img:"char_ninja",altImg:"char_ninja_flame",port:"p_ninja",runAnim:!0,perk:"Nhẫn giả · Nhảy kép trên không"},
+  {id:"tasha",name:"Tasha",outfit:"Cheer Star",img:"char_tasha",altImg:"char_tasha_cheer",port:"p_tasha",runAnim:!0,perk:"Cổ vũ · +15% Điểm chạy"},
+  {id:"frank",name:"Frank",outfit:"VIP / Clown",img:"char_frank",altImg:"char_frank_clown",port:"p_frank",runAnim:!0,perk:"Thỏ Quý Tộc · Khởi đầu có Ván"},
+  {id:"king",name:"King",outfit:"Royal Top Run #1",img:"char_king",altImg:"char_king_royal",port:"p_king",runAnim:!0,perk:"Vua Đường Tàu · +25% Xu"},
+  {id:"zoe",name:"Zoe",outfit:"Neon Biker",img:"char_zoe",altImg:"char_zoe_biker",port:"p_zoe",runAnim:!0,perk:"Biker · +20% Tốc độ Ván"},
+  {id:"brody",name:"Brody",outfit:"Beach Chill",img:"char_brody",altImg:"char_brody_chill",port:"p_jake",runAnim:!0,perk:"Lướt sóng · Lướt mượt trên không"},
+  {id:"princek",name:"Prince K",outfit:"Golden Shine",img:"char_princek",altImg:"char_princek_shine",port:"p_princek",runAnim:!0,perk:"Hoàng Tử Vàng · ×2 Xu & +25% Điểm"},
+  {id:"andy",name:"Andy",outfit:"Gamer Outfit",img:"char_andy_gamer",port:"p_jake",runAnim:!1,perk:"Gamer · Lướt mượt & +10% Điểm"},
+  {id:"asher",name:"Asher",outfit:"Street Style",img:"char_asher",port:"p_jake",runAnim:!1,perk:"Skate · +10% Thời gian Ván"},
+  {id:"almabrava",name:"Alma Brava",outfit:"Fiesta Spirit",img:"char_almabrava",port:"p_tricky",runAnim:!1,perk:"Vũ điệu · +15% Nam châm"},
+  {id:"ballerina",name:"Ballerina",outfit:"Latticina",img:"char_ballerina",port:"p_lucy",runAnim:!1,perk:"Ba lê · Nhảy cao +10%"},
+  {id:"boombot",name:"Boombot",outfit:"Golden Robot",img:"char_boombot",port:"p_boombot",runAnim:!1,perk:"Robot · Tự hút xu gần"},
+  {id:"cleo",name:"Cleo",outfit:"Blossom Queen",img:"char_cleo_blossom",port:"p_tasha",runAnim:!1,perk:"Nữ hoàng · +15% Sao ×2"},
+  {id:"dino",name:"Dino",outfit:"Arcade Mascot",img:"char_dino",port:"p_dino",runAnim:!1,perk:"Khủng long · Khởi đầu có Ván"},
+  {id:"dummy",name:"Dummy",outfit:"Skelly Outfit",img:"char_dummy",port:"p_frank",runAnim:!1,perk:"Xương rồng · Nhảy kép trên không"},
+  {id:"ella",name:"Ella",outfit:"Gold Empress",img:"char_ella_gold",port:"p_ella",runAnim:!1,perk:"Nữ thần · ×2 Xu Vàng"},
+  {id:"golden",name:"Golden Guardian",outfit:"3.71 VIP Guard",img:"char_golden",port:"p_golden",runAnim:!1,perk:"Vệ binh Vàng · Khởi đầu có Ván"},
+  {id:"holly",name:"Holly",outfit:"Shenzhen Star",img:"char_holly",port:"p_holly",runAnim:!1,perk:"Ngôi sao · +20% Điểm chạy"},
+  {id:"joowon",name:"Joowon",outfit:"K-Pop Idol",img:"char_joowon",port:"p_joowon",runAnim:!1,perk:"Idol · +15% Jetpack"},
+  {id:"lana",name:"Lana",outfit:"Nordic Runner",img:"char_lana",port:"p_tricky",runAnim:!1,perk:"Bắc Âu · +15% Thời gian Ván"},
+  {id:"lee",name:"Lee",outfit:"Wudang Master",img:"char_lee_wudang",port:"p_ninja",runAnim:!1,perk:"Võ sư · Nhảy kép trên không"},
+  {id:"leif",name:"Leif",outfit:"Firebird",img:"char_leif",port:"p_spike",runAnim:!1,perk:"Phượng hoàng · +20% Jetpack"},
+  {id:"leo",name:"Leo",outfit:"Metro Hero",img:"char_leo",port:"p_fresh",runAnim:!1,perk:"Phi công · Lướt mượt trên không"},
+  {id:"lily",name:"Lily",outfit:"Kangarumi",img:"char_lily",port:"p_lily",runAnim:!1,perk:"Dễ thương · +15% Giày Siêu Nhảy"},
+  {id:"maeko",name:"Maeko",outfit:"Tokyo Drift",img:"char_maeko",port:"p_lucy",runAnim:!1,perk:"Harajuku · +15% Tốc độ Ván"},
+  {id:"manny",name:"Manny",outfit:"Luchador",img:"char_manny",port:"p_fresh",runAnim:!1,perk:"Đô vật · +20% Điểm va chạm"},
+  {id:"marie",name:"Marie Macaron",outfit:"Paris Sweet",img:"char_marie",port:"p_tasha",runAnim:!1,perk:"Bánh ngọt · +15% Nam châm"},
+  {id:"meihua",name:"Mei Hua",outfit:"Shenzhen Lotus",img:"char_meihua",port:"p_holly",runAnim:!1,perk:"Thâm Quyến · +20% Điểm Tour"},
+  {id:"missmaia",name:"Miss Maia",outfit:"Cyber DJ",img:"char_missmaia",port:"p_lily",runAnim:!1,perk:"Cyberpunk · +15% Sao ×2"},
+  {id:"monkbot",name:"Monkbot",outfit:"Zen Mech",img:"char_monkbot",port:"p_boombot",runAnim:!1,perk:"Thiền máy · Tự hút xu gần"},
+  {id:"nick",name:"Nick",outfit:"Neon Sprinter",img:"char_nick",port:"p_jake",runAnim:!1,perk:"Neon · +15% Tốc độ Ván"},
+  {id:"olivia",name:"Olivia",outfit:"Derby Skate",img:"char_olivia",port:"p_tricky",runAnim:!1,perk:"Trượt patin · Lướt mượt trên không"},
+  {id:"riley",name:"Riley",outfit:"Aquamarine",img:"char_riley",port:"p_ella",runAnim:!1,perk:"Đại dương · +15% Thời gian Ván"},
+  {id:"rosalita",name:"Rosalita",outfit:"Rio Carnival",img:"char_rosalita",port:"p_tasha",runAnim:!1,perk:"Carnival · +15% Xu Vàng"},
+  {id:"scarlett",name:"Scarlett",outfit:"Catrina",img:"char_scarlett",port:"p_lucy",runAnim:!1,perk:"Huyền bí · +20% Sao ×2"},
+  {id:"siwoo",name:"Siwoo",outfit:"Seoul Dancer",img:"char_siwoo",port:"p_joowon",runAnim:!1,perk:"K-Dance · +15% Điểm chạy"},
+  {id:"skye",name:"Skye",outfit:"Sky Attack",img:"char_skye",port:"p_tricky",runAnim:!1,perk:"Không chiến · Nhảy kép trên không"},
+  {id:"songyi",name:"Song Yi",outfit:"Lucky Koi",img:"char_songyi",port:"p_holly",runAnim:!1,perk:"Cá Chép · +20% Xu May Mắn"},
+  {id:"thunder",name:"Thunder",outfit:"Neon Fu",img:"char_thunder",port:"p_ninja",runAnim:!1,perk:"Sấm sét · +25% Điểm chạy"},
+  {id:"thursday",name:"Thursday",outfit:"Goth Punk",img:"char_thursday",port:"p_lucy",runAnim:!1,perk:"Bí ẩn · Khởi đầu có Ván"},
+  {id:"wujadeling",name:"Wu Jade Ling",outfit:"Shenzhen Guardian",img:"char_wujadeling",port:"p_holly",runAnim:!1,perk:"Ngọc Linh · +25% Điểm Showdown"},
+  {id:"zayn",name:"Zayn",outfit:"Stealth Cyber",img:"char_zayn",port:"p_zoe",runAnim:!1,perk:"Tàng hình · Nhảy kép trên không"},
+  {id:"zihao",name:"Zi Hao",outfit:"Vanilla Street",img:"char_zihao",port:"p_joowon",runAnim:!1,perk:"Đường phố · +15% Giày Siêu Nhảy"},
+  {id:"jakestar",name:"Star Jake",outfit:"VIP Star Edition",img:"char_jake_star",port:"p_jake",runAnim:!1,perk:"Huyền thoại · +20% Điểm"},
+  {id:"ninjaflame",name:"Flame Ninja",outfit:"Inferno Outfit",img:"char_ninja_flame",port:"p_ninja",runAnim:!1,perk:"Hỏa Nhẫn · Nhảy kép +15% Điểm"}
 ];
 const APK_BOARDS=[
-  {id:"classic",name:"Hoverboard Cổ Điển",power:"Bảo vệ va chạm · Trail Sao",icon:"hoverboard",badge:"b_star",col1:"#DC2626",col2:"#FACC15",jumpMul:1,spdMul:1,dblJump:!1,glide:!1,zap:!1},
-  {id:"bouncer",name:"Bouncer",power:"Super Jump (Nhảy Siêu Cao)",icon:"hoverboard",badge:"b_feather",col1:"#2563EB",col2:"#FDE047",jumpMul:1.38,spdMul:1,dblJump:!1,glide:!1,zap:!1},
-  {id:"daredevil",name:"Daredevil",power:"Super Speed (Siêu Tốc +25%)",icon:"hoverboard",badge:"b_spark",col1:"#EF4444",col2:"#F8FAFC",jumpMul:1.05,spdMul:1.25,dblJump:!1,glide:!1,zap:!1},
-  {id:"greatwhite",name:"Great White (Cá Mập)",power:"Smooth Drift + Speed Up",icon:"hoverboard",badge:"b_splash",col1:"#0284C7",col2:"#E0F2FE",jumpMul:1.12,spdMul:1.18,dblJump:!1,glide:!0,zap:!1},
-  {id:"monster",name:"Monster Truck",power:"Super Jump + Speed Up",icon:"hoverboard",badge:"b_dust",col1:"#16A34A",col2:"#A3E635",jumpMul:1.36,spdMul:1.2,dblJump:!1,glide:!1,zap:!1},
-  {id:"skullfire",name:"Skull Fire",power:"Double Jump + Speed Up",icon:"hoverboard",badge:"b_spark",col1:"#EA580C",col2:"#FEF08A",jumpMul:1.2,spdMul:1.2,dblJump:!0,glide:!1,zap:!1},
-  {id:"superhero",name:"Superhero",power:"Zap Sideways + Super Jump",icon:"hoverboard",badge:"b_pink",col1:"#7E22CE",col2:"#F472B6",jumpMul:1.34,spdMul:1.15,dblJump:!0,glide:!1,zap:!0},
-  {id:"teleporter",name:"Teleporter",power:"Zap Sideways (Dịch Chuyển Tức Thì)",icon:"hoverboard",badge:"b_sound",col1:"#06B6D4",col2:"#A5F3FC",jumpMul:1.15,spdMul:1.15,dblJump:!1,glide:!1,zap:!0},
-  {id:"windglider",name:"Windglider",power:"Smooth Drift (Lượn Trên Không)",icon:"hoverboard",badge:"b_snow",col1:"#0EA5E9",col2:"#F0F9FF",jumpMul:1.22,spdMul:1.12,dblJump:!1,glide:!0,zap:!1},
-  {id:"freestyler",name:"Freestyler",power:"Double Jump + Super Jump",icon:"hoverboard",badge:"b_flower",col1:"#DB2777",col2:"#FDE047",jumpMul:1.35,spdMul:1.15,dblJump:!0,glide:!0,zap:!1}
+  {id:"starboard",name:"Starboard (3.71.0)",power:"Trail Sao · Cân bằng",badge:"b_star",col1:"#0284C7",col2:"#FACC15",jumpMul:1.05,spdMul:1.05,dblJump:!1,glide:!1,zap:!1},
+  {id:"bouncer",name:"Bouncer",power:"Super Jump (Nhảy Siêu Cao)",badge:"b_feather",col1:"#16A34A",col2:"#FDE047",jumpMul:1.38,spdMul:1.02,dblJump:!1,glide:!1,zap:!1},
+  {id:"daredevil",name:"Daredevil",power:"Super Speed (+25% Tốc Độ)",badge:"b_spark",col1:"#DC2626",col2:"#93C5FD",jumpMul:1.05,spdMul:1.25,dblJump:!1,glide:!1,zap:!1},
+  {id:"greatwhite",name:"Great White (Cá Mập)",power:"Smooth Drift + Speed Up",badge:"b_splash",col1:"#0284C7",col2:"#E0F2FE",jumpMul:1.14,spdMul:1.18,dblJump:!1,glide:!0,zap:!1},
+  {id:"monster",name:"Monster Truck",power:"Super Jump + Speed Up",badge:"b_dust",col1:"#16A34A",col2:"#A3E635",jumpMul:1.36,spdMul:1.2,dblJump:!1,glide:!1,zap:!1},
+  {id:"superhero",name:"Superhero",power:"Zap Sideways + Super Jump",badge:"b_pink",col1:"#7E22CE",col2:"#F472B6",jumpMul:1.34,spdMul:1.15,dblJump:!0,glide:!1,zap:!0},
+  {id:"teleporter",name:"Teleporter",power:"Zap Sideways (Dịch Chuyển)",badge:"b_sound",col1:"#06B6D4",col2:"#A5F3FC",jumpMul:1.15,spdMul:1.15,dblJump:!1,glide:!1,zap:!0},
+  {id:"windglider",name:"Windglider",power:"Smooth Drift (Lượn Không Trung)",badge:"b_snow",col1:"#0EA5E9",col2:"#F0F9FF",jumpMul:1.24,spdMul:1.12,dblJump:!1,glide:!0,zap:!1},
+  {id:"dragon",name:"Shenzhen Dragon",power:"Double Jump + Flame Trail",badge:"b_spark",col1:"#EA580C",col2:"#FACC15",jumpMul:1.22,spdMul:1.22,dblJump:!0,glide:!1,zap:!1},
+  {id:"hotrod",name:"Hot Rod",power:"Turbo Boost (+24% Tốc Độ)",badge:"b_spark",col1:"#DC2626",col2:"#FBBF24",jumpMul:1.1,spdMul:1.24,dblJump:!1,glide:!1,zap:!1},
+  {id:"badabomb",name:"Bada Bomb",power:"Rocket Pop + Super Jump",badge:"b_spark",col1:"#EF4444",col2:"#FEF08A",jumpMul:1.32,spdMul:1.16,dblJump:!1,glide:!1,zap:!1},
+  {id:"bambooster",name:"Bambooster",power:"Bamboo Boost + Smooth Drift",badge:"b_flower",col1:"#65A30D",col2:"#FDE047",jumpMul:1.18,spdMul:1.18,dblJump:!1,glide:!0,zap:!1},
+  {id:"bassblaster",name:"Bass Blaster",power:"Sound Wave + Double Jump",badge:"b_sound",col1:"#6366F1",col2:"#38BDF8",jumpMul:1.25,spdMul:1.14,dblJump:!0,glide:!1,zap:!1},
+  {id:"astronave",name:"Astronave",power:"Zero Gravity Glide + Zap",badge:"b_star",col1:"#4F46E5",col2:"#67E8F9",jumpMul:1.28,spdMul:1.15,dblJump:!1,glide:!0,zap:!0},
+  {id:"astrotune",name:"Astro Tune",power:"Cosmic Music + Super Jump",badge:"b_sound",col1:"#9333EA",col2:"#F472B6",jumpMul:1.3,spdMul:1.14,dblJump:!1,glide:!1,zap:!1},
+  {id:"backtothefuture",name:"Future Hover",power:"Time Warp + Zap Sideways",badge:"b_pink",col1:"#EC4899",col2:"#38BDF8",jumpMul:1.16,spdMul:1.24,dblJump:!1,glide:!1,zap:!0},
+  {id:"aero",name:"Aero Jet",power:"Smooth Air Glide",badge:"b_feather",col1:"#0EA5E9",col2:"#BAE6FD",jumpMul:1.2,spdMul:1.16,dblJump:!1,glide:!0,zap:!1},
+  {id:"aerofish",name:"Aero Fish",power:"Splash Drift + Super Jump",badge:"b_splash",col1:"#06B6D4",col2:"#FDBA74",jumpMul:1.28,spdMul:1.12,dblJump:!1,glide:!0,zap:!1},
+  {id:"arenarider",name:"Arena Rider",power:"Colosseum Charge + Speed",badge:"b_dust",col1:"#B45309",col2:"#FDE047",jumpMul:1.15,spdMul:1.2,dblJump:!1,glide:!1,zap:!1},
+  {id:"bigkahuna",name:"Big Kahuna",power:"Tropical Surf + Glide",badge:"b_splash",col1:"#0D9488",col2:"#FEF08A",jumpMul:1.18,spdMul:1.15,dblJump:!1,glide:!0,zap:!1},
+  {id:"bloomster",name:"Bloomster",power:"Petal Trail + Double Jump",badge:"b_flower",col1:"#EC4899",col2:"#A3E635",jumpMul:1.24,spdMul:1.1,dblJump:!0,glide:!1,zap:!1},
+  {id:"blueriff",name:"Blue Riff",power:"Electric Rock + Speed",badge:"b_sound",col1:"#2563EB",col2:"#60A5FA",jumpMul:1.14,spdMul:1.2,dblJump:!1,glide:!1,zap:!1},
+  {id:"chameleon",name:"Chameleon",power:"Prism Dash + Double Jump",badge:"b_splash",col1:"#22C55E",col2:"#F472B6",jumpMul:1.22,spdMul:1.15,dblJump:!0,glide:!1,zap:!1},
+  {id:"lowrider",name:"Lowrider",power:"Bounce Hydros + Stay Low",badge:"b_dust",col1:"#A855F7",col2:"#FACC15",jumpMul:1.3,spdMul:1.14,dblJump:!1,glide:!1,zap:!1},
+  {id:"lumberjack",name:"Lumberjack",power:"Timber Smash + Shield",badge:"b_dust",col1:"#9A3412",col2:"#FBBF24",jumpMul:1.12,spdMul:1.18,dblJump:!1,glide:!1,zap:!1},
+  {id:"panda",name:"Bamboo Panda",power:"Kungfu Double Jump",badge:"b_flower",col1:"#1E293B",col2:"#84CC16",jumpMul:1.26,spdMul:1.12,dblJump:!0,glide:!1,zap:!1},
+  {id:"rose",name:"Crimson Rose",power:"Rose Petals + Glide",badge:"b_flower",col1:"#BE123C",col2:"#FDA4AF",jumpMul:1.2,spdMul:1.14,dblJump:!1,glide:!0,zap:!1},
+  {id:"scoot",name:"Retro Scoot",power:"Turbo Scooter + Speed",badge:"b_spark",col1:"#0284C7",col2:"#F97316",jumpMul:1.14,spdMul:1.22,dblJump:!1,glide:!1,zap:!1},
+  {id:"sunset",name:"Sunset Cruise",power:"Miami Drift + Glide",badge:"b_pink",col1:"#F97316",col2:"#EC4899",jumpMul:1.18,spdMul:1.16,dblJump:!1,glide:!0,zap:!1},
+  {id:"14thbirthday",name:"14th Birthday",power:"Confetti Party + +20% Điểm",badge:"b_star",col1:"#F59E0B",col2:"#38BDF8",jumpMul:1.24,spdMul:1.18,dblJump:!0,glide:!0,zap:!1},
+  {id:"4thofjuly",name:"Liberty Fireworks",power:"Firework Spark + Super Jump",badge:"b_spark",col1:"#EF4444",col2:"#60A5FA",jumpMul:1.32,spdMul:1.15,dblJump:!1,glide:!1,zap:!1}
 ];
 const APK_CITIES=[
-  {id:"shenzhen",name:"Shenzhen Showdown (3.71.0)",icon:"city_shenzhen",logo:"logo_shenzhen",sky1:"#0F172A",sky2:"#1E1B4B",sky3:"#06B6D4",ground:"#0F172A",track:"#1E293B",train1:"#0284C7",train2:"#A855F7",desc:"Tour chính thức bản 3.71.0: Thành phố Cyber Neon Thâm Quyến!"},
-  {id:"subway",name:"Subway City Classic",icon:"city_subway",logo:"logo_subway",sky1:"#0284C7",sky2:"#38BDF8",sky3:"#E0F2FE",ground:"#65A30D",track:"#475569",train1:"#2563EB",train2:"#DC2626",desc:"Đường tàu New York cổ điển với tường gạch đỏ & toa tàu Graffiti RAILS!"},
-  {id:"bali",name:"Bali Tropical Island",icon:"city_bali",logo:"logo_bali",sky1:"#EA580C",sky2:"#F59E0B",sky3:"#FEF3C7",ground:"#15803D",track:"#44403C",train1:"#0D9488",train2:"#D97706",desc:"Đảo thiên đường Bali với đền tháp cổ, rặng dừa và hoàng hôn rực rỡ!"},
-  {id:"monaco",name:"Monaco Grand Prix",icon:"city_monaco",logo:"logo_monaco",sky1:"#1D4ED8",sky2:"#60A5FA",sky3:"#DBEAFE",ground:"#0369A1",track:"#334155",train1:"#E11D48",train2:"#F8FAFC",desc:"Đường đua F1 Monte Carlo bên bến du thuyền sang trọng!"},
-  {id:"mumbai",name:"Mumbai Festival",icon:"city_mumbai",logo:"logo_mumbai",sky1:"#7C2D12",sky2:"#EA580C",sky3:"#FDE68A",ground:"#B45309",track:"#451A03",train1:"#D97706",train2:"#059669",desc:"Lễ hội sắc màu Ấn Độ với cổng vòm Hoàng Gia & đoàn tàu tốc hành!"},
-  {id:"lava",name:"Floor Is Lava (Thử Thách 3.71.0)",icon:"city_plant",logo:"logo_showdown",sky1:"#450A0A",sky2:"#991B1B",sky3:"#F97316",ground:"#7F1D1D",track:"#DC2626",train1:"#1E293B",train2:"#F59E0B",desc:"Mặt đất phủ dung nham! Nhảy trên nóc tàu & dùng Ván Trượt nhận +50% Điểm!",lava:!0}
+  {id:"shenzhen",theme:"shenzhen",name:"Shenzhen Showdown (3.71.0)",icon:"city_shenzhen",logo:"logo_shenzhen",banner:"splash_showdown",sky1:"#0B1120",sky2:"#1E1B4B",sky3:"#0891B2",ground:"#1E293B",track:"#0F172A",rail:"#CBD5E1",desc:"Tour chính thức 3.71.0: Tàu cao tốc Thâm Quyến & Lồng đèn 3D!"},
+  {id:"lava",theme:"lava",name:"Floor Is Lava (Thử Thách)",icon:"city_lava",logo:"logo_lava",banner:"banner_lava",sky1:"#450A0A",sky2:"#991B1B",sky3:"#F97316",ground:"#7F1D1D",track:"#9A3412",rail:"#FDE047",desc:"Mặt đường dung nham sôi! Chạy nóc tàu & Ván Trượt nhận +50% Điểm!",lava:!0},
+  {id:"plant",theme:"plant",name:"Plant Invasion (Khu Rừng Bí Ẩn)",icon:"city_plant",logo:"logo_plant",banner:"banner_plant",sky1:"#064E3B",sky2:"#047857",sky3:"#6EE7B7",ground:"#14532D",track:"#1E293B",rail:"#86EFAC",desc:"Dây leo bao phủ thành phố! Tàu xanh Plant Invasion & Rào chắn rêu!"},
+  {id:"monaco",theme:"monaco",name:"Monaco Grand Prix",icon:"city_monaco",logo:"logo_monaco",banner:"splash_showdown",sky1:"#1E3A8A",sky2:"#2563EB",sky3:"#BAE6FD",ground:"#0369A1",track:"#334155",rail:"#E2E8F0",desc:"Đường đua F1 Monte Carlo với Siêu xe Bolid 3D bên đường ray!"},
+  {id:"bali",theme:"bali",name:"Bali Tropical Island",icon:"city_bali",logo:"logo_bali",banner:"splash_showdown",sky1:"#C2410C",sky2:"#F59E0B",sky3:"#FEF3C7",ground:"#15803D",track:"#44403C",rail:"#FDE68A",desc:"Đảo thiên đường Bali rực nắng cùng Khỉ Lướt Ván 3D siêu quậy!"},
+  {id:"mumbai",theme:"mumbai",name:"Mumbai Festival",icon:"city_mumbai",logo:"logo_mumbai",banner:"splash_showdown",sky1:"#7C2D12",sky2:"#EA580C",sky3:"#FDE68A",ground:"#92400E",track:"#451A03",rail:"#FEF08A",desc:"Lễ hội sắc màu Ấn Độ cùng Xe Tuk-Tuk 3D & Đoàn tàu Tốc Hành!"}
+];
+const APK_MODES=[
+  {id:"classic",name:"Classic Tour",desc:"Chạy World Tour kinh điển · Săn chữ S-U-B-W-A-Y"},
+  {id:"mystery",name:"Mystery Hurdles (??)",banner:"banner_hurdles",desc:"Rào chắn Bí Ẩn! Nhảy qua rào '??' nhận Xu, Key hoặc Powerup bất ngờ"},
+  {id:"tagteam",name:"Tag Team (Tiếp Sức)",banner:"banner_tagteam",desc:"Đội chạy tiếp sức! Tự động đổi Nhân Vật mỗi 350m nhận +150 Xu!"}
 ];
 const WORD_TARGET="SUBWAY";
 const simRef=x.useRef({
   actFn:null,paused:!1,modal:null,
-  charIdx:0,boardIdx:0,cityIdx:0,
+  charIdx:0,boardIdx:0,cityIdx:0,modeIdx:0,
   useBoard:null,useHeadstart:null,useScoreBooster:null,saveMeWithKey:null,endRunNow:null,
-  openMysteryBox:null,selectChar:null,selectBoard:null,selectCity:null
+  openMysteryBox:null,selectChar:null,selectBoard:null,selectCity:null,selectMode:null
 });
 const [phase,setPhase]=x.useState("play");
 const [paused,setPaused]=x.useState(!1);
-const [modal,setModal]=x.useState(null); // null | "me" | "cities" | "missions" | "box" | "saveme"
-const [meTab,setMeTab]=x.useState("chars"); // "chars" | "boards" | "badges"
+const [modal,setModal]=x.useState(null);
+const [meTab,setMeTab]=x.useState("chars");
 const [charIdx,setCharIdx]=x.useState(0);
 const [boardIdx,setBoardIdx]=x.useState(0);
 const [cityIdx,setCityIdx]=x.useState(0);
+const [modeIdx,setModeIdx]=x.useState(0);
 const [boxReward,setBoxReward]=x.useState(null);
 const [hud,setHud]=x.useState({
-  score:0,coins:250,keys:5,boards:5,boxes:2,
+  score:0,coins:300,keys:6,boards:6,boxes:2,
   mult:1,baseMult:10,
   boardT:0,jetpackT:0,sneakersT:0,magnetT:0,dblT:0,guardDist:1,
   word:"S_____",wordIdx:1,
   headstartReady:!0,boosterUsed:!1,
   missions:[
-    {id:1,txt:"Thu thập 30 Xu Vàng",cur:0,target:30,done:!1},
+    {id:1,txt:"Thu thập 30 Xu Vàng 3D",cur:0,target:30,done:!1},
     {id:2,txt:"Nhảy lên nóc tàu 4 lần",cur:0,target:4,done:!1},
     {id:3,txt:"Lướt Ván Trượt hoặc Jetpack",cur:0,target:1,done:!1}
   ],
@@ -5325,41 +5392,43 @@ x.useEffect(()=>{
   const SW=(typeof window!=="undefined"&&window.__SUBWAY__&&window.__SUBWAY__.img)||{};
   const imgCache={};
   Object.keys(SW).forEach(k=>{const im=new Image();im.src=SW[k];imgCache[k]=im;});
+  const getImg=k=>{const im=imgCache[k];return(im&&im.complete&&im.naturalWidth>0)?im:null;};
   let raf=0,alive=!0,last=performance.now(),elapsed=0,tAccum=0;
   simRef.current.paused=!1;setPaused(!1);
   let lane=0,lanePos=0,playerY=0,jumpV=0,groundY=0,rollT=0,jumpsLeft=2;
-  let cIdx=simRef.current.charIdx||0,bIdx=simRef.current.boardIdx||0,ctIdx=simRef.current.cityIdx||0;
-  let score=0,coins=250,keys=5,boards=5,boxes=2,baseMult=10,boosterBonus=0;
-  let boardT=0,jetpackT=0,sneakersT=0,magnetT=0,dblT=0,invT=0,guardCloseT=2.5;
-  let wzSpeed=5.4,worldDist=0,spawnT=0.35,dustT=0,shake=0,banner="🏃‍♂️ SUBWAY SURFERS 3.71.0: SHENZHEN SHOWDOWN!",bannerT=3.2;
-  let wordIdx=1,headstartT=4.5,boosterUsed=!1;
+  let cIdx=simRef.current.charIdx||0,bIdx=simRef.current.boardIdx||0,ctIdx=simRef.current.cityIdx||0,mdIdx=simRef.current.modeIdx||0;
+  let score=0,coins=300,keys=6,boards=6,boxes=2,baseMult=10,boosterBonus=0;
+  let boardT=(APK_CHARS[cIdx]&&(APK_CHARS[cIdx].id==="frank"||APK_CHARS[cIdx].id==="dino"||APK_CHARS[cIdx].id==="golden"||APK_CHARS[cIdx].id==="thursday"))?15:0;
+  let jetpackT=0,sneakersT=0,magnetT=0,dblT=0,invT=0,guardCloseT=2.5;
+  let wzSpeed=3.2,worldDist=0,spawnT=0.55,dustT=0,shake=0,banner="🏃‍♂️ SUBWAY SURFERS 3.71.0 APK: SHENZHEN SHOWDOWN!",bannerT=3.2;
+  let wordIdx=1,headstartT=5.0,boosterUsed=!1,nextRelayDist=110;
   const missions=[
-    {id:1,txt:"Thu thập 30 Xu Vàng",cur:0,target:30,done:!1},
+    {id:1,txt:"Thu thập 30 Xu Vàng 3D",cur:0,target:30,done:!1},
     {id:2,txt:"Nhảy lên nóc tàu 4 lần",cur:0,target:4,done:!1},
     {id:3,txt:"Lướt Ván Trượt hoặc Jetpack",cur:0,target:1,done:!1}
   ];
   const progMission=(id,add=1)=>{
-    const ms=missions.find(x=>x.id===id);
+    const ms=missions.find(q=>q.id===id);
     if(ms&&!ms.done){
       ms.cur=Math.min(ms.target,ms.cur+add);
       if(ms.cur>=ms.target){
-        ms.done=!0,baseMult+=2,coins+=100,keys+=1;
+        ms.done=!0,baseMult+=2,coins+=120,keys+=1;
         m.fanfare&&m.fanfare();
-        banner=`⭐ HOÀN THÀNH NHIỆM VỤ: ${ms.txt.toUpperCase()}! (HỆ SỐ ×${baseMult})`,bannerT=2.8;
+        banner=`⭐ XONG NHIỆM VỤ: ${ms.txt.toUpperCase()}! (HỆ SỐ ×${baseMult})`,bannerT=2.8;
       }
     }
   };
   const trains=[],obs=[],pickups=[],pops=[],dust=[],scenery=[];
   const STYLES=[
-    {front:"#F9735B",side:"#C2412D",trim:"#FED7AA",roof:"#9A3412",tag:"SUBWAY",aw:"#EF4444",bkCol:"#0E7490",bkSide:"#155E75",bkRoof:"#38BDF8"},
-    {front:"#FBBF24",side:"#B45309",trim:"#FEF3C7",roof:"#92400E",tag:"SPRAY",aw:"#DC2626",bkCol:"#1D4ED8",bkSide:"#1E3A8A",bkRoof:"#60A5FA"},
-    {front:"#38BDF8",side:"#0369A1",trim:"#E0F2FE",roof:"#0C4A6E",tag:"METRO",aw:"#EA580C",bkCol:"#0F766E",bkSide:"#115E59",bkRoof:"#2DD4BF"},
-    {front:"#A855F7",side:"#6B21A8",trim:"#F3E8FF",roof:"#581C87",tag:"CYBER",aw:"#DB2777",bkCol:"#334155",bkSide:"#1E293B",bkRoof:"#64748B"},
-    {front:"#34D399",side:"#047857",trim:"#D1FAE5",roof:"#065F46",tag:"SURF",aw:"#0D9488",bkCol:"#0284C7",bkSide:"#075985",bkRoof:"#7DD3FC"}
+    {front:"#F9735B",side:"#C2412D",trim:"#FED7AA",roof:"#9A3412",tag:"SUBWAY",bkCol:"#0E7490",bkSide:"#155E75",bkRoof:"#38BDF8"},
+    {front:"#FBBF24",side:"#B45309",trim:"#FEF3C7",roof:"#92400E",tag:"3.71.0",bkCol:"#1D4ED8",bkSide:"#1E3A8A",bkRoof:"#60A5FA"},
+    {front:"#38BDF8",side:"#0369A1",trim:"#E0F2FE",roof:"#0C4A6E",tag:"TOUR",bkCol:"#0F766E",bkSide:"#115E59",bkRoof:"#2DD4BF"},
+    {front:"#A855F7",side:"#6B21A8",trim:"#F3E8FF",roof:"#581C87",tag:"CYBER",bkCol:"#334155",bkSide:"#1E293B",bkRoof:"#64748B"},
+    {front:"#34D399",side:"#047857",trim:"#D1FAE5",roof:"#065F46",tag:"SURF",bkCol:"#0284C7",bkSide:"#075985",bkRoof:"#7DD3FC"}
   ];
   for(let z0=1.2;z0<ZFAR;z0+=3.0){
     const id=Math.floor(z0);
-    scenery.push({z:z0,L:STYLES[id%STYLES.length],R:STYLES[(id+2)%STYLES.length],hL:180+((id*29)%80),hR:185+((id*31)%80),bhL:310+((id*47)%115),bhR:320+((id*53)%110)});
+    scenery.push({z:z0,L:STYLES[id%STYLES.length],R:STYLES[(id+2)%STYLES.length],hL:180+((id*29)%80),hR:185+((id*31)%80),bhL:310+((id*47)%115),bhR:320+((id*53)%110),hasProp:id%2===0});
   }
   const addPop=(x0,y0,txt,col="#FFD644")=>pops.push({x:x0,y:y0,t:0,text:txt,col});
   const spawnDust=(x0,y0,n=4,col="#F8FAFC")=>{
@@ -5370,11 +5439,12 @@ x.useEffect(()=>{
     if(boardT>0||jetpackT>0)return;
     if(boards<=0&&coins<50){banner="Cần 50 Xu để mua thêm Ván Trượt!",bannerT=2;return;}
     if(boards>0)boards--;else coins-=50;
-    boardT=30;
+    const ch=APK_CHARS[cIdx]||APK_CHARS[0];
+    boardT=ch.perk.indexOf("Thời gian Ván")>=0?36:30;
     const bd=APK_BOARDS[bIdx]||APK_BOARDS[0];
     m.powerUp?m.powerUp():m.click();
     progMission(3,1);
-    banner=`🛹 LƯỚT VÁN: ${bd.name.toUpperCase()} (${bd.power})!`,bannerT=2.6;
+    banner=`🛹 LƯỚT VÁN 3D: ${bd.name.toUpperCase()} (${bd.power})!`,bannerT=2.6;
     const gp=proj(lanePos*168,playerY+40,PZ);
     spawnDust(gp.x,gp.y,10,bd.col2);
   };
@@ -5385,115 +5455,105 @@ x.useEffect(()=>{
     headstartT=0,jetpackT=7.5,playerY=220,jumpV=0,rollT=0;
     m.powerUp?m.powerUp():m.fanfare();
     progMission(3,1);
-    banner="🚀 MEGA HEADSTART! PHÓNG TÊN LỬA TRÊN KHÔNG!",bannerT=2.8;
-    for(let k=0;k<18;k++){
-      [-1,0,1].forEach(ln=>{
-        pickups.push({z:PZ+2.2+k*0.95,lane:ln,kind:"coin",elev:220,got:!1});
-      });
-    }
+    banner="🚀 MEGA HEADSTART! TÊN LỬA JETPACK PHÓNG VỌT!",bannerT=2.6;
+    for(let k=0;k<12;k++)[-1,0,1].forEach(ln=>pickups.push({z:PZ+2+k*0.95,lane:ln,kind:"coin",elev:220,got:!1}));
   };
   const activateScoreBooster=()=>{
-    if(boosterUsed)return;
-    boosterUsed=!0,boosterBonus=7;
-    m.powerUp?m.powerUp():m.chime();
-    banner="⭐ SCORE BOOSTER KÍCH HOẠT! (+7 HỆ SỐ NHÂN ĐIỂM!)",bannerT=2.6;
+    if(boosterUsed||coins<60)return;
+    coins-=60,boosterBonus+=7,boosterUsed=!0;
+    m.chime&&m.chime();
+    banner=`⚡ SCORE BOOSTER! HỆ SỐ ĐIỂM CỘNG THÊM +7 (×${baseMult+boosterBonus})`,bannerT=2.6;
   };
-  const doAct=act=>{
-    if(simRef.current.paused||simRef.current.modal)return;
-    const bd=APK_BOARDS[bIdx]||APK_BOARDS[0];
-    const ch=APK_CHARS[cIdx]||APK_CHARS[0];
-    if(act==="L"&&lane>-1){
-      lane--;
-      if(boardT>0&&bd.zap)lanePos=lane;
-      m.click();
-    }else if(act==="R"&&lane<1){
-      lane++;
-      if(boardT>0&&bd.zap)lanePos=lane;
-      m.click();
-    }else if(act==="U"&&jetpackT<=0){
-      const canDbl=(boardT>0&&bd.dblJump)||ch.id==="ninja";
-      if(playerY<=groundY+3|| (canDbl&&jumpsLeft>0)){
-        const jMul=(sneakersT>0?1.42:1)*(boardT>0?bd.jumpMul:1);
-        jumpV=610*jMul;
-        rollT=0;
-        jumpsLeft=playerY<=groundY+3?(canDbl?1:0):0;
-        m.slice?m.slice():m.click();
-      }
-    }else if(act==="D"&&jetpackT<=0){
-      if(playerY>groundY+6){
-        jumpV=-920;
-      }else{
-        rollT=0.62;
-        m.blowOut?m.blowOut():m.click();
-      }
-    }else if(act==="B"){
-      activateBoard();
+  const doSaveMeWithKey=()=>{
+    if(keys<=0){doEndRun();return;}
+    keys--;
+    invT=2.4,guardCloseT=0,rollT=0,playerY=Math.max(playerY,groundY);
+    trains.forEach(tr=>{if(tr.z<PZ+5.5)tr.hit=!0;});
+    obs.forEach(o=>{if(o.z<PZ+5.5)o.hit=!0;});
+    m.fanfare&&m.fanfare();
+    setModal(null);
+    simRef.current.paused=!1;setPaused(!1);
+    banner="🔑 ĐÃ DÙNG CHÌA KHÓA HỒI SINH! CHẠY TIẾP!",bannerT=2.6;
+  };
+  const doEndRun=()=>{
+    setModal(null);
+    alive=!1;
+    const sc=Math.floor(score),carrots=Math.max(10,Math.round(sc/160+coins/25));
+    setRes({score:sc,coins,keys,carrots});
+    setBest(b=>Math.max(b,sc));
+    addCoins(carrots);
+    Y.getState().award&&Y.getState().award("subway");
+    setPhase("over");
+  };
+  const openMysteryBox=(freeFromPickup=!1)=>{
+    if(!freeFromPickup){
+      if(boxes>0)boxes--;
+      else if(coins>=120)coins-=120;
+      else{banner="Cần 1 Hộp Bí Ẩn hoặc 120 Xu để mở!",bannerT=2;return;}
     }
-  };
-  simRef.current.actFn=doAct;
-  simRef.current.useBoard=activateBoard;
-  simRef.current.useHeadstart=activateHeadstart;
-  simRef.current.useScoreBooster=activateScoreBooster;
-  simRef.current.selectChar=idx=>{
-    cIdx=idx;simRef.current.charIdx=idx;setCharIdx(idx);
-    m.click();
-    banner=`🏃‍♂️ ĐÃ CHỌN: ${APK_CHARS[idx].name.toUpperCase()}!`,bannerT=2.4;
-  };
-  simRef.current.selectBoard=idx=>{
-    bIdx=idx;simRef.current.boardIdx=idx;setBoardIdx(idx);
-    m.click();
-    banner=`🛹 ĐÃ TRANG BỊ VÁN: ${APK_BOARDS[idx].name.toUpperCase()}!`,bannerT=2.4;
-  };
-  simRef.current.selectCity=idx=>{
-    ctIdx=idx;simRef.current.cityIdx=idx;setCityIdx(idx);
-    m.click();
-    banner=`🌍 WORLD TOUR: ${APK_CITIES[idx].name.toUpperCase()}!`,bannerT=2.8;
-  };
-  simRef.current.openMysteryBox=(isSuper=!1)=>{
-    if(!isSuper&&boxes<=0&&coins<120)return;
-    if(!isSuper){if(boxes>0)boxes--;else coins-=120;}
-    const pool=isSuper?[
-      {title:"+600 Xu Vàng!",icon:"coinpack",coins:600,keys:0,boards:0},
-      {title:"+5 Chìa Khóa Cứu Mạng!",icon:"keypack",coins:0,keys:5,boards:0},
-      {title:"+8 Ván Trượt Siêu Cấp!",icon:"hoverboard",coins:0,keys:0,boards:8},
-      {title:"Jackpot +1200 Xu & +3 Chìa Khóa!",icon:"supermysterybox",coins:1200,keys:3,boards:3}
-    ]:[
-      {title:"+250 Xu Vàng!",icon:"coinpack",coins:250,keys:0,boards:0},
-      {title:"+2 Chìa Khóa Xanh!",icon:"keys",coins:0,keys:2,boards:0},
-      {title:"+4 Ván Trượt Hoverboard!",icon:"hoverboard",coins:0,keys:0,boards:4},
-      {title:"+400 Xu & +1 Chìa Khóa!",icon:"mysterybox",coins:400,keys:1,boards:1}
+    const rolls=[
+      {title:"+250 Xu Vàng 🪙",icon:"coin",fn:()=>{coins+=250;}},
+      {title:"+3 Chìa Khóa Xanh 🔑",icon:"keys",fn:()=>{keys+=3;}},
+      {title:"+4 Ván Trượt 3D 🛹",icon:"hoverboard",fn:()=>{boards+=4;}},
+      {title:"+2 Hệ Số Nhân Điểm ⭐",icon:"multiplier",fn:()=>{baseMult+=2;}},
+      {title:"Siêu Quà Jetpack + 150 Xu 🚀",icon:"jetpack",fn:()=>{coins+=150,boards+=2;}}
     ];
-    const rw=pool[Math.floor(Math.random()*pool.length)];
-    coins+=rw.coins,keys+=rw.keys,boards+=rw.boards;
+    const rw=rolls[Math.floor(Math.random()*rolls.length)];
+    rw.fn();
     m.fanfare&&m.fanfare();
     setBoxReward(rw);
     setModal("box");
   };
-  simRef.current.saveMeWithKey=()=>{
-    if(keys<=0)return;
-    keys--;
-    invT=2.2,guardCloseT=0,boardT=12,shake=12;
-    trains.length=0,obs.length=0;
-    m.powerUp?m.powerUp():m.fanfare();
-    setModal(null);
-    banner="🔑 ĐÃ DÙNG CHÌA KHÓA CỨU MẠNG! TIẾP TỤC CHẠY!",bannerT=2.6;
+  simRef.current.useBoard=activateBoard;
+  simRef.current.useHeadstart=activateHeadstart;
+  simRef.current.useScoreBooster=activateScoreBooster;
+  simRef.current.saveMeWithKey=doSaveMeWithKey;
+  simRef.current.endRunNow=doEndRun;
+  simRef.current.openMysteryBox=openMysteryBox;
+  simRef.current.selectChar=idx=>{cIdx=idx;setCharIdx(idx);simRef.current.charIdx=idx;m.click();};
+  simRef.current.selectBoard=idx=>{bIdx=idx;setBoardIdx(idx);simRef.current.boardIdx=idx;m.click();};
+  simRef.current.selectCity=idx=>{ctIdx=idx;setCityIdx(idx);simRef.current.cityIdx=idx;banner=`🌍 TOUR MỚI: ${APK_CITIES[idx].name.toUpperCase()}!`;bannerT=2.8;m.fanfare&&m.fanfare();};
+  simRef.current.selectMode=idx=>{mdIdx=idx;setModeIdx(idx);simRef.current.modeIdx=idx;banner=`🎮 CHẾ ĐỘ: ${APK_MODES[idx].name.toUpperCase()}!`;bannerT=2.8;m.fanfare&&m.fanfare();};
+  const doAct=act=>{
+    if(simRef.current.paused||simRef.current.modal)return;
+    const ch=APK_CHARS[cIdx]||APK_CHARS[0];
+    const bd=APK_BOARDS[bIdx]||APK_BOARDS[0];
+    if(act==="L"&&lane>-1){
+      lane--;
+      if(boardT>0&&bd.zap){lanePos=lane;spawnDust(proj(lanePos*168,playerY+30,PZ).x,proj(lanePos*168,playerY+30,PZ).y,7,"#38BDF8");}
+      m.slice?m.slice():m.click();
+    }else if(act==="R"&&lane<1){
+      lane++;
+      if(boardT>0&&bd.zap){lanePos=lane;spawnDust(proj(lanePos*168,playerY+30,PZ).x,proj(lanePos*168,playerY+30,PZ).y,7,"#38BDF8");}
+      m.slice?m.slice():m.click();
+    }else if(act==="U"&&jetpackT<=0){
+      const canDbl=(ch.perk.indexOf("Nhảy kép")>=0||(boardT>0&&bd.dblJump))&&jumpsLeft>0&&playerY>groundY+5;
+      if(playerY<=groundY+5||canDbl){
+        const snMul=sneakersT>0?1.35:1;
+        const bMul=boardT>0?bd.jumpMul:1;
+        jumpV=790*snMul*bMul;
+        rollT=0;
+        jumpsLeft=playerY<=groundY+5?1:0;
+        m.click&&m.click();
+        spawnDust(proj(lanePos*168,playerY+6,PZ).x,proj(lanePos*168,playerY+6,PZ).y,5);
+      }
+    }else if(act==="D"&&jetpackT<=0){
+      if(playerY>groundY+8){jumpV=-1200;rollT=0.45;}
+      else{rollT=0.58;m.slice&&m.slice();}
+    }
   };
-  simRef.current.endRunNow=()=>{
-    alive=!1;
-    const finalSc=Math.floor(score)+coins*5,carrots=Math.max(2,Math.floor(finalSc/80)+keys);
-    addCoins(carrots);setBest(b=>Math.max(b,finalSc));setRes({score:finalSc,coins,keys,carrots});
-    if(finalSc>=500)Y.getState().award("subway");
-    setModal(null);
-    setPhase("over");
-  };
-  const spawnWave=(zBase=20.5,forceOpen=null)=>{
-    const lanes=[-1,0,1],open=forceOpen!==null?forceOpen:lanes[Math.floor(Math.random()*lanes.length)];
+  simRef.current.actFn=doAct;
+  const TRAIN_TYPES=["sub","std","freight","cargo"];
+  const spawnWave=(zBase,idx,forceOpen=null)=>{
     const city=APK_CITIES[ctIdx]||APK_CITIES[0];
-    for(const ln of lanes){
-      if(ln===open){
-        if(forceOpen!==null||Math.random()<0.42){
-          trains.push({z:zBase,lane:ln,len:3.8,moving:!1,hasRamp:!0,col:city.train1,roofY:124,hit:!1});
-          for(let c=0;c<5;c++){
+    const openLane=forceOpen!==null?forceOpen:((idx+(Math.floor(Math.random()*3)))%3-1);
+    [-1,0,1].forEach(ln=>{
+      if(ln===openLane){
+        const hiRoof=Math.random()<0.25;
+        if(hiRoof){
+          const tType=TRAIN_TYPES[(idx+ln+4)%4];
+          trains.push({z:zBase,lane:ln,len:3.5,moving:!1,hasRamp:!0,tType,roofY:124,hit:!1});
+          for(let c=0;c<4;c++){
             pickups.push({z:zBase-0.4+c*0.8,lane:ln,kind:"coin",elev:c===0?64:148,got:!1});
           }
         }else{
@@ -5501,7 +5561,7 @@ x.useEffect(()=>{
             pickups.push({z:zBase+c*0.95,lane:ln,kind:"coin",elev:26,got:!1});
           }
         }
-        if(Math.random()<0.38){
+        if(Math.random()<0.4){
           const pRoll=Math.random();
           let pk="magnet";
           if(pRoll<0.18)pk="jetpack";
@@ -5513,19 +5573,21 @@ x.useEffect(()=>{
           else pk="mysterybox";
           pickups.push({z:zBase-1.2,lane:ln,kind:pk,elev:36,got:!1});
         }
-        continue;
+        return;
       }
       const r=Math.random();
-      if(r<0.54){
-        const moving=Math.random()<0.42;
+      if(r<0.52){
+        const moving=Math.random()<0.4;
         const hasRamp=!moving&&Math.random()<0.38;
         const tLen=moving?3.2:3.5;
-        trains.push({z:zBase,lane:ln,len:tLen,moving,hasRamp,col:Math.random()<0.5?city.train1:city.train2,roofY:124,hit:!1});
+        const tType=TRAIN_TYPES[(idx+ln+7)%4];
+        trains.push({z:zBase,lane:ln,len:tLen,moving,hasRamp,tType,roofY:124,hit:!1});
         for(let c=0;c<3;c++){
           pickups.push({z:zBase+0.6+c*0.9,lane:ln,kind:"coin",elev:148,got:!1});
         }
       }else if(r<0.78){
-        obs.push({z:zBase,lane:ln,type:"hurdle",hit:!1});
+        const isMystery=mdIdx===1&&Math.random()<0.55;
+        obs.push({z:zBase,lane:ln,type:"hurdle",mystery:isMystery,cleared:!1,hit:!1});
         [-0.7,0,0.7].forEach((dz,ci)=>{
           pickups.push({z:zBase+dz,lane:ln,kind:"coin",elev:ci===1?98:56,got:!1});
         });
@@ -5533,9 +5595,9 @@ x.useEffect(()=>{
         obs.push({z:zBase,lane:ln,type:"highbar",hit:!1});
         pickups.push({z:zBase,lane:ln,kind:"coin",elev:22,got:!1});
       }
-    }
+    });
   };
-  spawnWave(8.2,0);spawnWave(15.0,0);
+  spawnWave(9.5,0,0);spawnWave(16.0,1);
   let sw=null,lastTap=0;
   const onDown=e=>{
     if(simRef.current.modal)return;
@@ -5574,7 +5636,10 @@ x.useEffect(()=>{
     ctx.fill();
     if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=1;ctx.stroke();}
   };
-  const drawBuilding3D=(zRaw,side,st,bh,tallH)=>{
+  const themeModel=(theme,part)=>{
+    return getImg(`t_${theme}_${part}`)||getImg(`t_${theme}_std`)||getImg(`t_shenzhen_${part}`);
+  };
+  const drawBuilding3D=(zRaw,side,st,bh,tallH,hasProp,city)=>{
     const zf=Math.max(0.62,zRaw),zb=zRaw+2.2;
     if(zb<=0.75||zb-zf<0.12)return;
     const bxIn=side<0?-690:690,bxOut=side<0?-960:960;
@@ -5603,195 +5668,194 @@ x.useEffect(()=>{
       ctx.fillStyle="#7C2D12";ctx.font=`900 ${Math.max(7,Math.round(bw*0.11))}px sans-serif`;ctx.textAlign="center";ctx.textBaseline="middle";
       ctx.fillText(st.tag,xMin+bw*0.5,yTop+fh*0.455);
     }
+    if(zf>0.95&&zf<16){
+      const sp=proj(side*305,16,zf+0.4);
+      const sigIm=themeModel(city.theme,"sig");
+      if(sigIm){
+        const sh=165*sp.s,sw0=sh*(sigIm.naturalWidth/sigIm.naturalHeight);
+        ctx.drawImage(sigIm,sp.x-sw0*0.5,sp.y-sh,sw0,sh);
+      }
+      if(hasProp){
+        const pp=proj(side*355,city.theme==="shenzhen"?145:16,zf+0.9);
+        const propIm=themeModel(city.theme,"prop");
+        if(propIm){
+          const ph=(city.theme==="shenzhen"?98:118)*pp.s,pw=ph*(propIm.naturalWidth/propIm.naturalHeight);
+          ctx.drawImage(propIm,pp.x-pw*0.5,pp.y-ph,pw,ph);
+        }
+      }
+    }
   };
-  const drawTrain3D=tr=>{
+  const drawTrain3D=(tr,city)=>{
     const xc=tr.lane*168,zf=Math.max(0.65,tr.z),zb=tr.z+tr.len,hx=71,th=tr.roofY;
     if(zb<=0.7||zb-zf<0.08)return;
-    quad(proj(xc-hx-8,1,zf-0.06),proj(xc+hx+8,1,zf-0.06),proj(xc+hx+8,1,zb+0.08),proj(xc-hx-8,1,zb+0.08),"rgba(15,23,42,0.42)");
+    quad(proj(xc-hx-8,1,zf-0.06),proj(xc+hx+8,1,zf-0.06),proj(xc+hx+8,1,zb+0.08),proj(xc-hx-8,1,zb+0.08),"rgba(15,23,42,0.45)");
     const bfl=proj(xc-hx,8,zf),bfr=proj(xc+hx,8,zf),tfl=proj(xc-hx,th,zf),tfr=proj(xc+hx,th,zf);
-    const bbl=proj(xc-hx,8,zb),bbr=proj(xc+hx,8,zb),tbl=proj(xc-hx,th,zb),tbr=proj(xc+hx,th,zb);
-    if(tr.lane<=0)quad(bfr,tfr,tbr,bbr,"#CBD5E1","#475569");
-    if(tr.lane>=0)quad(bfl,tfl,tbl,bbl,"#94A3B8","#475569");
-    quad(tfl,tfr,tbr,tbl,"#E2E8F0","#64748B");
+    const bbl=proj(xc-hx,8,zb),bbr=proj(xc+hx,8,zb),tbl=proj(xc-hx,th,zb),tbr=proj(xc-hx+2*hx,th,zb);
+    const wallSide=city.theme==="lava"?"#7F1D1D":city.theme==="plant"?"#14532D":city.theme==="monaco"?"#1E3A8A":"#334155";
+    const roofCol=city.theme==="lava"?"#450A0A":city.theme==="plant"?"#365314":city.theme==="monaco"?"#475569":"#475569";
+    if(tr.lane<=0)quad(bfr,tfr,tbr,bbr,wallSide,"#1E293B");
+    if(tr.lane>=0)quad(bfl,tfl,tbl,bbl,wallSide,"#1E293B");
+    quad(tfl,tfr,tbr,tbl,roofCol,"#64748B");
     for(let rz=zf+0.45;rz<zb-0.4;rz+=0.95){
-      quad(proj(xc-hx*0.55,th+2,rz),proj(xc+hx*0.55,th+2,rz),proj(xc+hx*0.55,th+2,rz+0.42),proj(xc-hx*0.55,th+2,rz+0.42),"#94A3B8");
+      quad(proj(xc-hx*0.55,th+2,rz),proj(xc+hx*0.55,th+2,rz),proj(xc+hx*0.55,th+2,rz+0.42),proj(xc-hx*0.55,th+2,rz+0.42),"#64748B");
     }
-    quad(bfl,bfr,tfr,tfl,tr.col,"#1E293B");
+    const trIm=themeModel(city.theme,tr.tType||"sub");
     const fw=bfr.x-bfl.x,fh=bfl.y-tfl.y;
-    const gIm=imgCache.train_rails;
-    if(gIm&&gIm.complete&&fw>18&&fh>18){
-      ctx.save();
-      ctx.globalAlpha=0.92;
-      ctx.drawImage(gIm,bfl.x+fw*0.06,tfl.y+fh*0.42,fw*0.88,fh*0.42);
-      ctx.restore();
+    if(trIm&&fw>10){
+      const dw=fw*1.06,dh=fh*1.22;
+      ctx.drawImage(trIm,(bfl.x+bfr.x)*0.5-dw*0.5,bfl.y-dh+fh*0.14,dw,dh);
+    }else{
+      quad(bfl,bfr,tfr,tfl,city.theme==="lava"?"#DC2626":"#0284C7","#1E293B");
     }
-    ctx.fillStyle="#0F172A";
-    ctx.fillRect(bfl.x+fw*0.1,tfl.y+fh*0.1,fw*0.8,fh*0.28);
-    ctx.fillStyle="#38BDF8";
-    ctx.fillRect(bfl.x+fw*0.13,tfl.y+fh*0.13,fw*0.35,fh*0.22);
-    ctx.fillRect(bfl.x+fw*0.52,tfl.y+fh*0.13,fw*0.35,fh*0.22);
-    ctx.fillStyle=tr.moving?(Math.sin(elapsed*18)>0?"#FEF08A":"#F97316"):"#FDE047";
-    ctx.beginPath();ctx.arc(bfl.x+fw*0.18,bfl.y-fh*0.1,Math.max(2.5,fw*0.07),0,Math.PI*2);ctx.fill();
-    ctx.beginPath();ctx.arc(bfr.x-fw*0.18,bfl.y-fh*0.1,Math.max(2.5,fw*0.07),0,Math.PI*2);ctx.fill();
+    if(tr.moving&&fw>16){
+      const flAlpha=Math.sin(elapsed*18)>0?0.75:0.35;
+      ctx.fillStyle=`rgba(254,240,138,${flAlpha})`;
+      ctx.beginPath();ctx.arc(bfl.x+fw*0.24,bfl.y-fh*0.36,Math.max(4,fw*0.09),0,Math.PI*2);ctx.fill();
+      ctx.beginPath();ctx.arc(bfr.x-fw*0.24,bfl.y-fh*0.36,Math.max(4,fw*0.09),0,Math.PI*2);ctx.fill();
+    }
     if(tr.hasRamp&&zf>0.72){
       const rz0=Math.max(0.65,zf-0.88);
       const rbl=proj(xc-hx*0.92,2,rz0),rbr=proj(xc+hx*0.92,2,rz0);
       quad(rbl,rbr,tfr,tfl,"#FACC15","#B45309");
-      const rm1=proj(xc-hx*0.85,th*0.45,(rz0+zf)*0.5),rm2=proj(xc+hx*0.85,th*0.45,(rz0+zf)*0.5);
-      ctx.strokeStyle="#1E293B";ctx.lineWidth=Math.max(2,4*rbl.s);
-      ctx.beginPath();ctx.moveTo(rm1.x,rm1.y);ctx.lineTo(rm2.x,rm2.y);ctx.stroke();
+      const rampIm=themeModel(city.theme,"ramp");
+      if(rampIm){
+        const rMidZ=(rz0+zf)*0.5,rp=proj(xc,2,rMidZ),rw=(rbr.x-rbl.x)*1.08,rh=(rbl.y-tfl.y)*1.15;
+        ctx.drawImage(rampIm,rp.x-rw*0.5,rbl.y-rh*0.95,rw,rh);
+      }
     }
   };
-  const drawHurdle3D=o=>{
+  const drawHurdle3D=(o,city)=>{
     const xc=o.lane*168,zf=Math.max(0.68,o.z),zb=zf+0.15,hw=74;
     quad(proj(xc-hw,1,zf-0.05),proj(xc+hw,1,zf-0.05),proj(xc+hw,1,zb+0.08),proj(xc-hw,1,zb+0.08),"rgba(15,23,42,0.34)");
-    [-hw*0.72,hw*0.72].forEach(lx=>{
-      quad(proj(xc+lx-6,0,zf),proj(xc+lx+6,0,zf),proj(xc+lx+4.5,68,zf+0.08),proj(xc+lx-4.5,68,zf+0.08),"#334155");
-    });
-    const p1=proj(xc-hw,38,zf),p2=proj(xc+hw,38,zf),p3=proj(xc+hw,65,zf),p4=proj(xc-hw,65,zf);
-    quad(p1,p2,p3,p4,"#EF4444","#FFFFFF");
-    const w0=p2.x-p1.x;
-    ctx.fillStyle="#FFFFFF";
-    for(let k=0;k<4;k++){
-      const sx=p1.x+(k+0.35)*(w0/4);
-      ctx.fillRect(sx,p3.y+2,w0*0.1,p1.y-p3.y-4);
+    const im=themeModel(city.theme,"low");
+    const p1=proj(xc-hw,0,zf),p2=proj(xc+hw,0,zf),pTop=proj(xc,82,zf);
+    const dw=(p2.x-p1.x)*1.06,dh=dw*(im?(im.naturalHeight/im.naturalWidth):0.85);
+    if(im){
+      ctx.drawImage(im,(p1.x+p2.x)*0.5-dw*0.5,p1.y-dh*0.92,dw,dh);
+    }else{
+      quad(proj(xc-hw,38,zf),proj(xc+hw,38,zf),proj(xc+hw,65,zf),proj(xc-hw,65,zf),"#EF4444","#FFF");
+    }
+    if(o.mystery&&!o.cleared){
+      const mp=proj(xc,78,zf);
+      ctx.fillStyle="#FACC15";ctx.strokeStyle="#451A03";ctx.lineWidth=2.5*mp.s;
+      ctx.beginPath();ctx.arc(mp.x,mp.y,18*mp.s,0,Math.PI*2);ctx.fill();ctx.stroke();
+      ctx.fillStyle="#DC2626";ctx.font=`900 ${Math.max(10,Math.round(20*mp.s))}px sans-serif`;ctx.textAlign="center";ctx.textBaseline="middle";
+      ctx.fillText("?",mp.x,mp.y+1);
     }
   };
-  const drawHighBar3D=o=>{
+  const drawHighBar3D=(o,city)=>{
     const xc=o.lane*168,zf=Math.max(0.68,o.z),hw=76;
-    [-hw*0.86,hw*0.86].forEach(lx=>{
-      quad(proj(xc+lx-6,0,zf),proj(xc+lx+6,0,zf),proj(xc+lx+5,134,zf),proj(xc+lx-5,134,zf),"#475569");
-    });
-    const p1=proj(xc-hw,76,zf),p2=proj(xc+hw,76,zf),p3=proj(xc+hw,128,zf),p4=proj(xc-hw,128,zf);
-    quad(p1,p2,p3,p4,"#F59E0B","#1E293B");
-    const h0=p1.y-p3.y;
-    ctx.fillStyle="#1E293B";ctx.font=`900 ${Math.max(8,Math.round(h0*0.42))}px sans-serif`;ctx.textAlign="center";ctx.textBaseline="middle";
-    ctx.fillText("CUỘN ↓",(p1.x+p2.x)/2,(p1.y+p3.y)/2);
+    const im=themeModel(city.theme,"high");
+    const p1=proj(xc-hw,0,zf),p2=proj(xc+hw,0,zf);
+    const dw=(p2.x-p1.x)*1.12,dh=dw*(im?(im.naturalHeight/im.naturalWidth):1.08);
+    if(im){
+      ctx.drawImage(im,(p1.x+p2.x)*0.5-dw*0.5,p1.y-dh*0.94,dw,dh);
+    }else{
+      quad(proj(xc-hw,76,zf),proj(xc+hw,76,zf),proj(xc+hw,128,zf),proj(xc-hw,128,zf),"#F59E0B","#1E293B");
+    }
   };
   const drawPickup=p=>{
     const gp=proj(p.lane*168,groundY+1,p.z),pos=proj(p.lane*168,p.elev,p.z),s=pos.s,px=pos.x,py=pos.y;
-    ctx.fillStyle="rgba(15,23,42,0.22)";ctx.beginPath();ctx.ellipse(gp.x,gp.y,12*gp.s,4*gp.s,0,0,Math.PI*2);ctx.fill();
+    ctx.fillStyle="rgba(15,23,42,0.24)";ctx.beginPath();ctx.ellipse(gp.x,gp.y,12*gp.s,4*gp.s,0,0,Math.PI*2);ctx.fill();
     const bob=Math.sin(elapsed*6+p.z)*5*s;
     if(p.kind==="coin"){
-      const im=imgCache.coin;
-      const sz=36*s,spin=0.45+0.55*Math.abs(Math.cos(elapsed*7+p.z));
-      if(im&&im.complete&&im.naturalWidth){
+      const im=getImg("coin");
+      const sz=38*s,spin=0.45+0.55*Math.abs(Math.cos(elapsed*7+p.z));
+      if(im){
         ctx.drawImage(im,px-sz*0.5*spin,py-sz*0.5+bob,sz*spin,sz);
       }else{
         ctx.fillStyle="#FACC15";ctx.beginPath();ctx.arc(px,py+bob,16*s,0,Math.PI*2);ctx.fill();
       }
     }else if(p.kind==="letter"){
-      const im=imgCache.wordhunt;
+      const im=getImg("wordhunt");
       const sz=52*s;
-      if(im&&im.complete)ctx.drawImage(im,px-sz*0.5,py-sz*0.5+bob,sz,sz);
+      if(im)ctx.drawImage(im,px-sz*0.5,py-sz*0.5+bob,sz,sz);
       const ch=WORD_TARGET[Math.min(WORD_TARGET.length-1,wordIdx)];
       ctx.fillStyle="#FEF08A";ctx.strokeStyle="#14532D";ctx.lineWidth=3*s;
       ctx.font=`900 ${Math.max(11,Math.round(22*s))}px sans-serif`;ctx.textAlign="center";ctx.textBaseline="middle";
       ctx.strokeText(ch,px,py+bob);ctx.fillText(ch,px,py+bob);
     }else{
-      const im=imgCache[p.kind]||imgCache.mysterybox;
-      const sz=54*s;
-      ctx.fillStyle="rgba(250,204,21,0.28)";
-      ctx.beginPath();ctx.arc(px,py+bob,28*s,0,Math.PI*2);ctx.fill();
-      if(im&&im.complete&&im.naturalWidth){
-        ctx.drawImage(im,px-sz*0.5,py-sz*0.5+bob,sz,sz);
+      const im=getImg(p.kind)||getImg("mysterybox");
+      const sz=60*s;
+      ctx.fillStyle="rgba(250,204,21,0.32)";
+      ctx.beginPath();ctx.arc(px,py+bob,30*s,0,Math.PI*2);ctx.fill();
+      if(im){
+        const w0=sz*(im.naturalWidth/Math.max(im.naturalWidth,im.naturalHeight));
+        const h0=sz*(im.naturalHeight/Math.max(im.naturalWidth,im.naturalHeight));
+        ctx.drawImage(im,px-w0*0.5,py-h0*0.5+bob,w0,h0);
       }
     }
   };
   const drawGuardAndDog=()=>{
     if(guardCloseT<=0||jetpackT>0)return;
-    const gz=PZ-0.26+(2.8-Math.min(2.8,guardCloseT))*0.12;
-    const gp=proj(lanePos*168,groundY,gz),s=gp.s*0.92;
-    const stride=Math.sin(elapsed*21);
-    ctx.save();
-    ctx.translate(gp.x-44*s,gp.y+28*s);
-    ctx.fillStyle="rgba(15,23,42,0.32)";ctx.beginPath();ctx.ellipse(0,4*s,22*s,8*s,0,0,Math.PI*2);ctx.fill();
-    ctx.fillStyle="#14532D";
-    ctx.fillRect(-11*s,-22*s+stride*5*s,9*s,20*s);
-    ctx.fillRect(2*s,-22*s-stride*5*s,9*s,20*s);
-    ctx.fillStyle="#15803D";ctx.beginPath();ctx.roundRect(-18*s,-54*s,36*s,34*s,10*s);ctx.fill();
-    ctx.fillStyle="#FDBA74";ctx.beginPath();ctx.arc(0,-66*s,15*s,0,Math.PI*2);ctx.fill();
-    ctx.fillStyle="#166534";ctx.beginPath();ctx.roundRect(-17*s,-80*s,34*s,13*s,5*s);ctx.fill();
-    ctx.fillStyle="#FACC15";ctx.beginPath();ctx.arc(0,-74*s,4*s,0,Math.PI*2);ctx.fill();
-    ctx.fillStyle="#78350F";
-    ctx.beginPath();ctx.ellipse(38*s,-14*s+Math.abs(stride)*4*s,15*s,10*s,0,0,Math.PI*2);ctx.fill();
-    ctx.beginPath();ctx.arc(38*s,-24*s,9*s,0,Math.PI*2);ctx.fill();
-    ctx.restore();
+    const gz=PZ-0.25+(2.8-Math.min(2.8,guardCloseT))*0.11;
+    const gp=proj(lanePos*168,groundY,gz),s=gp.s;
+    const frame=(Math.floor(elapsed*(5.2+wzSpeed*0.65))%2)===0?"1":"2";
+    const gIm=getImg(`g3d_${frame}`);
+    const dIm=getImg(`d3d_${frame}`);
+    ctx.fillStyle="rgba(15,23,42,0.36)";ctx.beginPath();ctx.ellipse(gp.x-28*s,gp.y+26*s,24*s,8*s,0,0,Math.PI*2);ctx.fill();
+    if(gIm){
+      const gh=116*s,gw=gh*(gIm.naturalWidth/gIm.naturalHeight);
+      ctx.drawImage(gIm,gp.x-gw*0.85,gp.y+28*s-gh,gw,gh);
+    }
+    if(dIm){
+      const dh=72*s,dw=dh*(dIm.naturalWidth/dIm.naturalHeight);
+      ctx.drawImage(dIm,gp.x+8*s,gp.y+24*s-dh,dw,dh);
+    }
   };
   const drawPlayer=()=>{
     const ch=APK_CHARS[cIdx]||APK_CHARS[0];
     const bd=APK_BOARDS[bIdx]||APK_BOARDS[0];
-    const gp=proj(lanePos*168,groundY,PZ),ap=proj(lanePos*168,playerY,PZ),s=gp.s*1.15,rolling=rollT>0;
-    ctx.fillStyle=`rgba(15,23,42,${Math.max(0.14,0.38-(playerY-groundY)/320)})`;
-    ctx.beginPath();ctx.ellipse(gp.x,gp.y+2,34*s*Math.max(0.4,1-(playerY-groundY)/240),12*s,0,0,Math.PI*2);ctx.fill();
+    const gp=proj(lanePos*168,groundY,PZ),ap=proj(lanePos*168,playerY,PZ),s=gp.s*1.12,rolling=rollT>0;
+    ctx.fillStyle=`rgba(15,23,42,${Math.max(0.14,0.42-(playerY-groundY)/320)})`;
+    ctx.beginPath();ctx.ellipse(gp.x,gp.y+2,36*s*Math.max(0.4,1-(playerY-groundY)/240),12*s,0,0,Math.PI*2);ctx.fill();
     ctx.save();
     ctx.translate(ap.x,ap.y);
-    const lean=(lane-lanePos)*0.32;
+    const lean=(lane-lanePos)*0.3;
     ctx.rotate(lean);
-    const stride=rolling||playerY>groundY+4||boardT>0||jetpackT>0?0:Math.sin(elapsed*19),swing=Math.cos(elapsed*19);
     if(boardT>0){
       ctx.save();
-      ctx.translate(0,-4*s+Math.sin(elapsed*12)*3*s);
-      ctx.fillStyle="rgba(56,189,248,0.35)";
-      ctx.beginPath();ctx.ellipse(0,6*s,38*s,13*s,0,0,Math.PI*2);ctx.fill();
-      ctx.fillStyle=bd.col2;ctx.strokeStyle="#0F172A";ctx.lineWidth=2.5*s;
-      ctx.beginPath();ctx.ellipse(0,0,34*s,13*s,0,0,Math.PI*2);ctx.fill();ctx.stroke();
-      ctx.fillStyle=bd.col1;
-      ctx.beginPath();ctx.ellipse(0,0,26*s,9*s,0,0,Math.PI*2);ctx.fill();
+      const bobY=Math.sin(elapsed*12)*3*s;
+      ctx.translate(0,bobY);
+      ctx.fillStyle="rgba(56,189,248,0.36)";
+      ctx.beginPath();ctx.ellipse(0,2*s,46*s,14*s,0,0,Math.PI*2);ctx.fill();
+      const bIm=getImg(`b3d_${bd.id}`)||getImg("hoverboard");
+      if(bIm){
+        const bw=94*s,bh=bw*(bIm.naturalHeight/bIm.naturalWidth);
+        ctx.drawImage(bIm,-bw*0.5,-bh*0.62,bw,bh);
+      }
       ctx.restore();
     }
-    if(rolling){
-      ctx.translate(0,-25*s);ctx.rotate(elapsed*15);ctx.scale(1,0.68);ctx.translate(0,25*s);
+    if(sneakersT>0){
+      ctx.fillStyle="rgba(74,222,128,0.45)";
+      ctx.beginPath();ctx.ellipse(0,-4*s,26*s,9*s,0,0,Math.PI*2);ctx.fill();
     }
-    ctx.fillStyle=ch.pants;
-    ctx.beginPath();ctx.roundRect(-16*s,-29*s+stride*6.5*s,12*s,24*s,4*s);ctx.fill();
-    ctx.beginPath();ctx.roundRect(4*s,-29*s-stride*6.5*s,12*s,24*s,4*s);ctx.fill();
-    const shoeSc=sneakersT>0?1.45:1;
-    ctx.fillStyle=sneakersT>0?"#F97316":ch.shoe;
-    ctx.beginPath();ctx.roundRect(-18*s*shoeSc,-9*s+stride*6.5*s,15*s*shoeSc,9*s*shoeSc,3*s);ctx.fill();
-    ctx.beginPath();ctx.roundRect(3*s,-9*s-stride*6.5*s,15*s*shoeSc,9*s*shoeSc,3*s);ctx.fill();
-    ctx.fillStyle="#F8FAFC";
-    ctx.fillRect(-17*s,-4*s+stride*6.5*s,14*s,3.5*s);
-    ctx.fillRect(3*s,-4*s-stride*6.5*s,14*s,3.5*s);
-    ctx.fillStyle=ch.hood;
-    ctx.beginPath();ctx.ellipse(-23*s,-46*s-swing*6*s,6.2*s,15.5*s,-0.22,0,Math.PI*2);ctx.fill();
-    ctx.beginPath();ctx.ellipse(23*s,-46*s+swing*6*s,6.2*s,15.5*s,0.22,0,Math.PI*2);ctx.fill();
-    ctx.fillStyle=ch.hood;ctx.beginPath();ctx.roundRect(-21*s,-65*s,42*s,40*s,12*s);ctx.fill();
-    ctx.fillStyle=ch.vest;ctx.beginPath();ctx.roundRect(-18*s,-63*s,36*s,35*s,10*s);ctx.fill();
-    ctx.fillStyle="#FACC15";ctx.beginPath();ctx.arc(0,-46*s,7*s,0,Math.PI*2);ctx.fill();
     if(jetpackT>0){
-      [-11*s,11*s].forEach((jx,ji)=>{
-        ctx.fillStyle=ji===0?"#22C55E":"#84CC16";
-        ctx.beginPath();ctx.roundRect(jx-7*s,-62*s,14*s,32*s,4*s);ctx.fill();
-        ctx.fillStyle="#FACC15";ctx.fillRect(jx-7*s,-56*s,14*s,5*s);
-        const flH=(26+Math.sin(elapsed*35+ji)*9)*s;
-        const fg=ctx.createLinearGradient(0,-30*s,0,-30*s+flH);
+      [-14*s,14*s].forEach((jx,ji)=>{
+        const flH=(34+Math.sin(elapsed*36+ji)*10)*s;
+        const fg=ctx.createLinearGradient(0,-20*s,0,-20*s+flH);
         fg.addColorStop(0,"#FEF08A");fg.addColorStop(0.5,"#F97316");fg.addColorStop(1,"rgba(239,68,68,0)");
         ctx.fillStyle=fg;
-        ctx.beginPath();ctx.moveTo(jx-6*s,-30*s);ctx.lineTo(jx+6*s,-30*s);ctx.lineTo(jx,-30*s+flH);ctx.closePath();ctx.fill();
+        ctx.beginPath();ctx.moveTo(jx-7*s,-20*s);ctx.lineTo(jx+7*s,-20*s);ctx.lineTo(jx,-20*s+flH);ctx.closePath();ctx.fill();
       });
     }
-    ctx.fillStyle=ch.skin;ctx.beginPath();ctx.arc(0,-77*s,20*s,0,Math.PI*2);ctx.fill();
-    ctx.fillStyle=ch.cap;
-    ctx.beginPath();ctx.arc(0,-80*s,20.5*s,Math.PI,0);ctx.fill();
-    ctx.fillRect(-20*s,-82*s,40*s,7*s);
-    ctx.fillStyle="#F8FAFC";ctx.beginPath();ctx.arc(0,-83*s,11*s,Math.PI,0);ctx.fill();
-    if(ch.id==="yutani"){
-      [-11*s,11*s].forEach(ax=>{
-        ctx.strokeStyle="#65A30D";ctx.lineWidth=3.5*s;
-        ctx.beginPath();ctx.moveTo(ax,-94*s);ctx.lineTo(ax*1.3,-108*s);ctx.stroke();
-        ctx.fillStyle="#3F6212";ctx.beginPath();ctx.arc(ax*1.3,-108*s,4.5*s,0,Math.PI*2);ctx.fill();
-      });
-    }else if(ch.id==="frank"){
-      [-9*s,9*s].forEach(ex=>{
-        ctx.fillStyle="#F8FAFC";ctx.beginPath();ctx.ellipse(ex,-102*s,5.5*s,15*s,0,0,Math.PI*2);ctx.fill();
-        ctx.fillStyle="#EF4444";ctx.beginPath();ctx.ellipse(ex,-102*s,2.5*s,9*s,0,0,Math.PI*2);ctx.fill();
-      });
-    }else if(ch.id==="king"||ch.id==="princek"){
-      ctx.fillStyle="#FACC15";ctx.strokeStyle="#B45309";ctx.lineWidth=1.5*s;
-      ctx.beginPath();ctx.moveTo(-14*s,-94*s);ctx.lineTo(-16*s,-108*s);ctx.lineTo(-6*s,-99*s);ctx.lineTo(0,-110*s);ctx.lineTo(6*s,-99*s);ctx.lineTo(16*s,-108*s);ctx.lineTo(14*s,-94*s);ctx.closePath();ctx.fill();ctx.stroke();
-    }else if(ch.id==="fresh"){
-      ctx.fillStyle="#451A03";ctx.fillRect(-15*s,-106*s,30*s,22*s);
+    const frame=(Math.floor(elapsed*(5.5+wzSpeed*0.7))%2)===0?"1":"2";
+    const rIm=ch.runAnim?getImg(`r3d_${ch.id}_${frame}`):getImg(ch.img);
+    if(rIm){
+      const strideBob=(boardT>0||jetpackT>0||playerY>groundY+5)?0:Math.abs(Math.sin(elapsed*(5.5+wzSpeed*0.7)))*3.5*s;
+      const baseH=(ch.runAnim?118:106)*s;
+      const rw=baseH*(rIm.naturalWidth/rIm.naturalHeight);
+      const yLift=boardT>0?-16*s:0;
+      if(rolling){
+        ctx.translate(0,-28*s);ctx.rotate(elapsed*11);ctx.scale(0.95,0.58);ctx.translate(0,28*s);
+      }else if(!ch.runAnim&&playerY<=groundY+5&&boardT<=0){
+        ctx.rotate(Math.sin(elapsed*(5.5+wzSpeed*0.7))*0.05);
+      }
+      if(invT>0&&Math.floor(elapsed*16)%2===0)ctx.globalAlpha=0.55;
+      ctx.drawImage(rIm,-rw*0.5,yLift-baseH-strideBob,rw,baseH);
+      ctx.globalAlpha=1;
+    }else{
+      ctx.fillStyle="#2563EB";ctx.beginPath();ctx.roundRect(-18*s,-75*s,36*s,70*s,10*s);ctx.fill();
     }
     ctx.restore();
   };
@@ -5802,7 +5866,7 @@ x.useEffect(()=>{
       obs.forEach(o=>{if(o.z<PZ+4.5)o.hit=!0;});
       m.bigPop?m.bigPop():m.click();
       const gp=proj(lanePos*168,playerY+45,PZ);
-      addPop(gp.x,gp.y-35,"🛹 VỠ VÁN TRƯỢT — THOÁT NẠN!","#38BDF8");
+      addPop(gp.x,gp.y-35,"🛹 VỠ VÁN TRƯỢT 3D — THOÁT NẠN!","#38BDF8");
       return!1;
     }
     shake=16;
@@ -5818,99 +5882,109 @@ x.useEffect(()=>{
     if(simRef.current.paused||simRef.current.modal){raf=requestAnimationFrame(tick);return;}
     const bd=APK_BOARDS[bIdx]||APK_BOARDS[0];
     const city=APK_CITIES[ctIdx]||APK_CITIES[0];
+    const ch=APK_CHARS[cIdx]||APK_CHARS[0];
     elapsed+=dt;
-    const spdMul=(jetpackT>0?1.55:1)*(boardT>0?bd.spdMul:1);
-    wzSpeed=Math.min(10.5,(5.4+elapsed*0.09)*spdMul);
+    const spdMul=(jetpackT>0?1.42:1)*(boardT>0?Math.min(1.18,0.94+(bd.spdMul-1)*0.65):1);
+    wzSpeed=Math.min(6.2,(3.2+elapsed*0.025)*spdMul);
     worldDist+=wzSpeed*dt;
+    if(mdIdx===2&&worldDist>=nextRelayDist){
+      nextRelayDist+=110;
+      cIdx=(cIdx+1)%APK_CHARS.length;
+      setCharIdx(cIdx);simRef.current.charIdx=cIdx;
+      coins+=150;
+      m.fanfare&&m.fanfare();
+      banner=`🤝 TAG TEAM TIẾP SỨC: ${APK_CHARS[cIdx].name.toUpperCase()} RA SÂN! +150 XU!`;bannerT=2.8;
+    }
     shake=Math.max(0,shake-30*dt),invT=Math.max(0,invT-dt),headstartT=Math.max(0,headstartT-dt);
     boardT=Math.max(0,boardT-dt),jetpackT=Math.max(0,jetpackT-dt),sneakersT=Math.max(0,sneakersT-dt);
     magnetT=Math.max(0,magnetT-dt),dblT=Math.max(0,dblT-dt),rollT=Math.max(0,rollT-dt);
-    guardCloseT=Math.max(0,guardCloseT-dt*0.25),bannerT=Math.max(0,bannerT-dt);
-    lanePos+=(lane-lanePos)*Math.min(1,dt*17);
-    let targetGround=0;
-    for(let i=0;i<trains.length;i++){
-      const tr=trains[i];
-      if(Math.abs(lanePos-tr.lane)<0.46&&tr.z<=PZ+0.45&&tr.z+tr.len>=PZ-0.22){
-        if(tr.hasRamp||playerY>=tr.roofY-28){
-          targetGround=tr.roofY;
-          playerY=Math.max(playerY,tr.roofY);
-          break;
+    bannerT=Math.max(0,bannerT-dt),guardCloseT=Math.max(0,guardCloseT-dt);
+    const hasScorePerk=ch.perk.indexOf("Điểm")>=0?1.2:1;
+    const lavaBonus=(city.lava&&(playerY>20||boardT>0))?1.5:1;
+    const totalMult=Math.round((baseMult+boosterBonus)*(dblT>0?2:1)*lavaBonus*hasScorePerk);
+    score+=dt*12*totalMult;
+    lanePos+=(lane-lanePos)*Math.min(1,dt*15);
+    groundY=0;
+    trains.forEach(tr=>{
+      if(!tr.hit&&Math.abs(lanePos-tr.lane)<0.48){
+        if(PZ>=tr.z-0.18&&PZ<=tr.z+tr.len-0.08&&playerY>=tr.roofY-24)groundY=Math.max(groundY,tr.roofY);
+        else if(tr.hasRamp&&PZ>=tr.z-0.95&&PZ<=tr.z-0.05){
+          const frac=Math.max(0,Math.min(1,(PZ-(tr.z-0.95))/0.9));
+          const ry=frac*tr.roofY;
+          if(playerY>=ry-36)groundY=Math.max(groundY,ry);
         }
       }
-    }
-    if(targetGround>0&&groundY===0)progMission(2,1);
-    groundY=targetGround;
+    });
     if(jetpackT>0){
       playerY+=(220-playerY)*Math.min(1,dt*8);
       jumpV=0;
-    }else if(playerY>groundY||jumpV!==0){
-      const grav=(boardT>0&&bd.glide&&jumpV<0)?680:1760;
-      playerY+=jumpV*dt;
-      jumpV-=grav*dt;
-      if(playerY<=groundY){
-        playerY=groundY,jumpV=0,jumpsLeft=2;
-        const gp=proj(lanePos*168,groundY,PZ);
-        spawnDust(gp.x,gp.y,5);
-      }
     }else{
-      playerY=groundY;
+      const g=(jumpV<0&&(ch.perk.indexOf("Lướt mượt")>=0||(boardT>0&&bd.glide)))?1220:2450;
+      jumpV-=g*dt;
+      playerY+=jumpV*dt;
+      if(playerY<=groundY){
+        if(groundY>=120&&playerY<groundY+4&&jumpV<0)progMission(2,1);
+        playerY=groundY,jumpV=0,jumpsLeft=2;
+      }
+    }
+    if(playerY<=groundY+4&&jetpackT<=0){
       dustT-=dt;
       if(dustT<=0){
-        dustT=0.09;
-        const gp=proj(lanePos*168,groundY,PZ);
-        spawnDust(gp.x,gp.y,2,boardT>0?bd.col2:"#F8FAFC");
+        dustT=0.14;
+        const dp=proj(lanePos*168,groundY+2,PZ);
+        spawnDust(dp.x,dp.y,boardT>0?2:1,boardT>0?bd.col2:(city.lava?"#F97316":"#F8FAFC"));
       }
     }
-    const totalMult=(baseMult+boosterBonus)*(dblT>0?2:1);
-    const lavaBonus=(city.lava&&(playerY>20||boardT>0))?1.5:1;
-    score+=dt*18*totalMult*lavaBonus;
-    if(Math.floor(score)>=500)Y.getState().award("subway");
-    spawnT-=dt;
+    scenery.forEach(sc=>{
+      sc.z-=wzSpeed*dt;
+      if(sc.z<0.85){
+        sc.z+=ZFAR-1.0;
+        sc.L=STYLES[Math.floor(Math.random()*STYLES.length)];
+        sc.R=STYLES[Math.floor(Math.random()*STYLES.length)];
+      }
+    });
+    spawnT-=dt*(wzSpeed/4.8);
     if(spawnT<=0){
-      spawnT=Math.max(0.75,1.32-(wzSpeed-5.2)*0.1);
-      spawnWave();
-    }
-    for(let i=scenery.length-1;i>=0;i--){
-      scenery[i].z-=wzSpeed*dt;
-      if(scenery[i].z+2.2<0.6)scenery.splice(i,1);
-    }
-    while(scenery.length===0||scenery[scenery.length-1].z<ZFAR-3.0){
-      const lastZ=scenery.length?scenery[scenery.length-1].z+3.0:2;
-      const idx=Math.floor(Math.random()*STYLES.length);
-      scenery.push({z:lastZ,L:STYLES[idx],R:STYLES[(idx+2)%STYLES.length],hL:180+Math.random()*80,hR:185+Math.random()*80,bhL:310+Math.random()*115,bhR:320+Math.random()*110});
+      spawnT=1.9+Math.random()*0.45;
+      spawnWave(ZFAR-1.2,Math.floor(Math.random()*100));
     }
     for(let i=trains.length-1;i>=0;i--){
       const tr=trains[i];
-      tr.z-=(wzSpeed+(tr.moving?3.2:0))*dt;
-      if(!tr.hit&&jetpackT<=0&&invT<=0&&tr.z<PZ+0.28&&tr.z+tr.len>PZ-0.12&&Math.abs(lanePos-tr.lane)<0.45){
-        if(tr.hasRamp){
-          playerY=Math.max(playerY,tr.roofY);
-          groundY=tr.roofY;
-        }else if(playerY<tr.roofY-18){
-          tr.hit=!0;
-          if(triggerCrash())return;
+      tr.z-=(tr.moving?wzSpeed*1.18:wzSpeed)*dt;
+      if(jetpackT<=0&&invT<=0&&!tr.hit&&Math.abs(lanePos-tr.lane)<0.46){
+        const inTrain=PZ>tr.z-0.15&&PZ<tr.z+tr.len-0.25;
+        if(inTrain&&playerY<tr.roofY-24){
+          if(!(tr.hasRamp&&PZ<tr.z+0.2&&playerY>=14)){
+            if(PZ<tr.z+0.48){if(triggerCrash())return;}
+            else{guardCloseT=2.8;tr.hit=!0;shake=7;addPop(VPX,H*0.5,"💥 VA CẠNH TÀU!","#F97316");}
+          }
         }
       }
-      if(tr.z+tr.len<0.55)trains.splice(i,1);
+      if(tr.z+tr.len<0.5)trains.splice(i,1);
     }
     for(let i=obs.length-1;i>=0;i--){
       const o=obs[i];
       o.z-=wzSpeed*dt;
-      if(!o.hit&&jetpackT<=0&&invT<=0&&o.z<PZ+0.14&&o.z+0.2>PZ-0.06&&Math.abs(lanePos-o.lane)<0.45){
-        const cleared=(o.type==="hurdle"&&playerY>42)||(o.type==="highbar"&&(rollT>0||playerY>130));
-        if(!cleared){
-          o.hit=!0;
-          if(triggerCrash())return;
-        }
+      if(jetpackT<=0&&!o.hit&&Math.abs(o.z-PZ)<0.22&&Math.abs(lanePos-o.lane)<0.46){
+        if(o.type==="hurdle"&&playerY<54&&invT<=0){if(triggerCrash())return;}
+        else if(o.type==="highbar"&&playerY>44&&rollT<=0&&invT<=0){if(triggerCrash())return;}
       }
-      if(o.z+0.6<0.55)obs.splice(i,1);
+      if(o.mystery&&!o.cleared&&!o.hit&&o.z<PZ-0.25&&Math.abs(lanePos-o.lane)<0.6&&playerY>=54){
+        o.cleared=!0;
+        const r=Math.random();
+        if(r<0.5){coins+=80;addPop(VPX,H*0.42,"❓ +80 XU RÀO BÍ ẨN!","#FACC15");}
+        else if(r<0.8){keys+=1;addPop(VPX,H*0.42,"❓ +1 CHÌA KHÓA!","#38BDF8");}
+        else{magnetT=8.0;addPop(VPX,H*0.42,"❓ NAM CHÂM BÍ ẨN!","#F472B6");}
+        m.chime&&m.chime();
+      }
+      if(o.z<0.6)obs.splice(i,1);
     }
-    const hasTagbotMagnet=(APK_CHARS[cIdx]&&APK_CHARS[cIdx].id==="tagbot");
+    const hasAutoMagnet=ch.perk.indexOf("Tự hút xu")>=0;
     for(let i=pickups.length-1;i>=0;i--){
       const p=pickups[i];
       p.z-=wzSpeed*dt;
       if(!p.got){
-        if((magnetT>0||hasTagbotMagnet||jetpackT>0)&&p.kind==="coin"&&p.z<5.2&&p.z>0.85){
+        if((magnetT>0||hasAutoMagnet||jetpackT>0)&&p.kind==="coin"&&p.z<5.5&&p.z>0.85){
           p.lane+=(lanePos-p.lane)*Math.min(1,dt*12);
           p.elev+=(playerY+24-p.elev)*Math.min(1,dt*12);
         }
@@ -5918,7 +5992,7 @@ x.useEffect(()=>{
           p.got=!0;
           const gp=proj(lanePos*168,playerY+58,PZ);
           if(p.kind==="coin"){
-            const cGain=(APK_CHARS[cIdx]&&APK_CHARS[cIdx].id==="princek")?2:1;
+            const cGain=(ch.perk.indexOf("×2 Xu")>=0)?2:1;
             coins+=cGain,score+=15*totalMult;
             progMission(1,cGain);
             m.coin&&m.coin();
@@ -5927,38 +6001,28 @@ x.useEffect(()=>{
             jetpackT=8.0,playerY=220,jumpV=0;
             progMission(3,1);
             m.powerUp&&m.powerUp();
-            banner="🚀 JETPACK PHẢN LỰC! BAY TRÊN MÂY GOM XU!",bannerT=2.6;
+            banner="🚀 JETPACK PHẢN LỰC 3D! BAY GOM XU!",bannerT=2.6;
             for(let k=0;k<14;k++)[-1,0,1].forEach(ln=>pickups.push({z:PZ+2+k*0.95,lane:ln,kind:"coin",elev:220,got:!1}));
           }else if(p.kind==="sneakers"){
-            sneakersT=10.0;
-            m.powerUp&&m.powerUp();
-            addPop(gp.x,gp.y,"👟 GIÀY SIÊU NHẢY!","#4ADE80");
+            sneakersT=10.0;m.powerUp&&m.powerUp();addPop(gp.x,gp.y,"👟 GIÀY SIÊU NHẢY 3D!","#4ADE80");
           }else if(p.kind==="magnet"){
-            magnetT=10.0;
-            m.powerUp&&m.powerUp();
-            addPop(gp.x,gp.y,"🧲 NAM CHÂM HÚT XU!","#F472B6");
+            magnetT=10.0;m.powerUp&&m.powerUp();addPop(gp.x,gp.y,"🧲 NAM CHÂM HÚT XU 3D!","#F472B6");
           }else if(p.kind==="multiplier"){
-            dblT=10.0;
-            m.powerUp&&m.powerUp();
-            addPop(gp.x,gp.y,`⭐ ×${totalMult*2} ĐIỂM!`,"#FACC15");
+            dblT=10.0;m.powerUp&&m.powerUp();addPop(gp.x,gp.y,`⭐ ×${totalMult*2} ĐIỂM!`,"#FACC15");
           }else if(p.kind==="pogostick"){
-            jumpV=920,playerY=Math.max(playerY,40);
-            m.powerUp&&m.powerUp();
-            addPop(gp.x,gp.y,"🚀 POGO STICK NHẢY VỌT!","#38BDF8");
+            jumpV=920,playerY=Math.max(playerY,40);m.powerUp&&m.powerUp();addPop(gp.x,gp.y,"🚀 ROCKET POGO 3D!","#38BDF8");
           }else if(p.kind==="letter"){
             wordIdx=Math.min(WORD_TARGET.length,wordIdx+1);
             m.chime&&m.chime();
             if(wordIdx>=WORD_TARGET.length){
               wordIdx=0,coins+=300,keys+=2,boxes+=1;
               m.fanfare&&m.fanfare();
-              banner="🔤 HOÀN THÀNH WORD HUNT 'S-U-B-W-A-Y'! +300 XU, +2 KEY & +1 HỘP BÍ ẨN!",bannerT=3.2;
+              banner="🔤 XONG WORD HUNT 'S-U-B-W-A-Y'! +300 XU, +2 KEY & +1 HỘP!",bannerT=3.2;
             }else{
               addPop(gp.x,gp.y,`🔤 ${WORD_TARGET.slice(0,wordIdx)}`,"#A3E635");
             }
           }else if(p.kind==="mysterybox"){
-            boxes++,coins+=80;
-            m.fanfare&&m.fanfare();
-            addPop(gp.x,gp.y,"🎁 +1 HỘP BÍ ẨN!","#C084FC");
+            boxes++,coins+=80;m.fanfare&&m.fanfare();addPop(gp.x,gp.y,"🎁 +1 HỘP BÍ ẨN 3D!","#C084FC");
           }
         }
       }
@@ -5994,19 +6058,30 @@ x.useEffect(()=>{
     const gr=ctx.createLinearGradient(0,VPY,0,H);
     gr.addColorStop(0,city.ground);gr.addColorStop(1,"#0F172A");
     ctx.fillStyle=gr;ctx.fillRect(0,VPY,W,H-VPY);
-    quad(proj(-420,16,ZFAR),proj(-275,16,ZFAR),proj(-275,16,0.85),proj(-420,16,0.85),"#CBD5E1");
-    quad(proj(275,16,ZFAR),proj(420,16,ZFAR),proj(420,16,0.85),proj(275,16,0.85),"#CBD5E1");
+    quad(proj(-420,16,ZFAR),proj(-275,16,ZFAR),proj(-275,16,0.85),proj(-420,16,0.85),city.lava?"#451A03":"#CBD5E1");
+    quad(proj(275,16,ZFAR),proj(420,16,ZFAR),proj(420,16,0.85),proj(275,16,0.85),city.lava?"#451A03":"#CBD5E1");
     quad(proj(-275,0,ZFAR),proj(275,0,ZFAR),proj(275,0,0.85),proj(-275,0,0.85),city.track);
+    if(city.lava){
+      const lavaIm=getImg("lava_ground");
+      if(lavaIm){
+        ctx.save();
+        ctx.globalAlpha=0.72;
+        const lvP=proj(-275,0,ZFAR),lvP2=proj(275,0,ZFAR);
+        ctx.drawImage(lavaIm,0,VPY,W,H-VPY);
+        ctx.restore();
+        quad(proj(-275,0,ZFAR),proj(275,0,ZFAR),proj(275,0,0.85),proj(-275,0,0.85),"rgba(249,115,22,0.28)");
+      }
+    }
     const off=worldDist%1.2;
     for(let z0=0.9+(1.2-off)*0.5;z0<ZFAR;z0+=0.85){
       const z1=Math.min(ZFAR,z0+0.22);
       [-168,0,168].forEach(tx=>{
-        quad(proj(tx-56,1,z0),proj(tx+56,1,z0),proj(tx+56,1,z1),proj(tx-56,1,z1),city.lava?"#F97316":"#57534E");
+        quad(proj(tx-56,1,z0),proj(tx+56,1,z0),proj(tx+56,1,z1),proj(tx-56,1,z1),city.lava?"#78350F":"#57534E");
       });
     }
     [-168,0,168].forEach(tx=>{
       [-34,34].forEach(rx=>{
-        quad(proj(tx+rx-3.5,2,ZFAR),proj(tx+rx+3.5,2,ZFAR),proj(tx+rx+3.5,2,0.85),proj(tx+rx-3.5,2,0.85),"#E2E8F0");
+        quad(proj(tx+rx-3.5,2,ZFAR),proj(tx+rx+3.5,2,ZFAR),proj(tx+rx+3.5,2,0.85),proj(tx+rx-3.5,2,0.85),city.rail);
       });
     });
     const items=[
@@ -6018,18 +6093,18 @@ x.useEffect(()=>{
     ].sort((a,b)=>b.z-a.z);
     items.forEach(it=>{
       if(it.k==="b"){
-        drawBuilding3D(it.v.z,-1,it.v.L,it.v.hL,it.v.bhL);
-        drawBuilding3D(it.v.z,1,it.v.R,it.v.hR,it.v.bhR);
+        drawBuilding3D(it.v.z,-1,it.v.L,it.v.hL,it.v.bhL,it.v.hasProp,city);
+        drawBuilding3D(it.v.z,1,it.v.R,it.v.hR,it.v.bhR,it.v.hasProp,city);
       }else if(it.k==="tr"){
-        drawTrain3D(it.v);
+        drawTrain3D(it.v,city);
       }else if(it.k==="pl"){
         drawGuardAndDog();
         drawPlayer();
       }else if(it.k==="p"){
         drawPickup(it.v);
       }else{
-        if(it.v.type==="hurdle")drawHurdle3D(it.v);
-        else drawHighBar3D(it.v);
+        if(it.v.type==="hurdle")drawHurdle3D(it.v,city);
+        else drawHighBar3D(it.v,city);
       }
     });
     dust.forEach(q=>{
@@ -6060,6 +6135,7 @@ const SW=(typeof window!=="undefined"&&window.__SUBWAY__&&window.__SUBWAY__.img)
 const curChar=APK_CHARS[charIdx]||APK_CHARS[0];
 const curBoard=APK_BOARDS[boardIdx]||APK_BOARDS[0];
 const curCity=APK_CITIES[cityIdx]||APK_CITIES[0];
+const curMode=APK_MODES[modeIdx]||APK_MODES[0];
 return t.jsxs("div",{
   className:"relative overflow-hidden rounded-[32px] sticker select-none",
   style:{touchAction:"none",width:"min(880px, 94vw)",aspectRatio:"900 / 520",backgroundColor:"#0F172A"},
@@ -6079,8 +6155,8 @@ return t.jsxs("div",{
                 className:"flex items-center gap-1.5 rounded-2xl px-3 py-1 font-title text-xs font-extrabold sticker transition",
                 style:{background:"linear-gradient(180deg,#38BDF8,#0284C7)",color:"#FFF",border:"2px solid #FFF"},
                 children:[
-                  SW[curChar.port]&&t.jsx("img",{src:SW[curChar.port],alt:"",style:{width:22,height:22,borderRadius:"50%"}}),
-                  t.jsx("span",{children:`🏃 ${curChar.name.split(" ")[0]} · 🛹 Ván (${hud.boards})`})
+                  SW[curChar.img]&&t.jsx("img",{src:SW[curChar.img],alt:"",style:{width:22,height:22,objectFit:"contain"}}),
+                  t.jsx("span",{children:`🏃 ${curChar.name} · 🛹 ${curBoard.name.split(" ")[0]} (${hud.boards})`})
                 ]
               }),
               t.jsxs("button",{
@@ -6110,7 +6186,7 @@ return t.jsxs("div",{
                 style:{background:"linear-gradient(180deg,#F472B6,#BE185D)",color:"#FFF",border:"2px solid #FCE7F3"},
                 children:[
                   SW.mysterybox&&t.jsx("img",{src:SW.mysterybox,alt:"",style:{width:20,height:20}}),
-                  t.jsx("span",{children:`Hộp Bí Ẩn (${hud.boxes})`})
+                  t.jsx("span",{children:`Hộp 3D (${hud.boxes})`})
                 ]
               }),
               t.jsxs("span",{
@@ -6174,56 +6250,53 @@ return t.jsxs("div",{
           t.jsxs("button",{
             onPointerDown:e=>e.stopPropagation(),
             onClick:e=>{e.stopPropagation();simRef.current.useBoard&&simRef.current.useBoard();},
-            title:"Kích hoạt Ván Trượt Hoverboard (Phím Space / Nhấp đúp)",
             className:"flex items-center gap-1.5 rounded-2xl px-3 py-1.5 font-title text-xs font-extrabold sticker transition",
             style:{
               backgroundColor:hud.boardT>0?"#0284C7":"rgba(15,23,42,0.86)",
               color:"#FFF",border:"2px solid #38BDF8"
             },
             children:[
-              SW.hoverboard&&t.jsx("img",{src:SW.hoverboard,alt:"",style:{width:26,height:26}}),
+              (SW[`b3d_${curBoard.id}`]||SW.hoverboard)&&t.jsx("img",{src:SW[`b3d_${curBoard.id}`]||SW.hoverboard,alt:"",style:{width:28,height:24,objectFit:"contain"}}),
               t.jsx("span",{children:hud.boardT>0?`${hud.boardT}s`:`Ván (${hud.boards})`})
             ]
           }),
           t.jsxs("button",{
             onPointerDown:e=>e.stopPropagation(),
             onClick:e=>{e.stopPropagation();simRef.current.useHeadstart&&simRef.current.useHeadstart();},
-            title:"Phóng Tên Lửa Mega Headstart (Phím E)",
             className:"flex items-center gap-1.5 rounded-2xl px-3 py-1.5 font-title text-xs font-extrabold sticker transition",
             style:{
               backgroundColor:hud.jetpackT>0?"#EA580C":"rgba(15,23,42,0.86)",
               color:"#FFF",border:"2px solid #F97316"
             },
             children:[
-              SW.headstart&&t.jsx("img",{src:SW.headstart,alt:"",style:{width:26,height:26}}),
+              SW.headstart&&t.jsx("img",{src:SW.headstart,alt:"",style:{width:26,height:26,objectFit:"contain"}}),
               t.jsx("span",{children:hud.jetpackT>0?`🚀 ${hud.jetpackT}s`:"Headstart"})
             ]
           }),
           !hud.boosterUsed&&t.jsxs("button",{
             onPointerDown:e=>e.stopPropagation(),
             onClick:e=>{e.stopPropagation();simRef.current.useScoreBooster&&simRef.current.useScoreBooster();},
-            title:"Kích hoạt Score Booster (+7 Hệ số nhân điểm)",
             className:"flex items-center gap-1.5 rounded-2xl px-3 py-1.5 font-title text-xs font-extrabold sticker transition",
             style:{backgroundColor:"rgba(15,23,42,0.86)",color:"#7DD3FC",border:"2px solid #38BDF8"},
             children:[
-              SW.scorebooster&&t.jsx("img",{src:SW.scorebooster,alt:"",style:{width:26,height:26}}),
+              SW.scorebooster&&t.jsx("img",{src:SW.scorebooster,alt:"",style:{width:24,height:24}}),
               t.jsx("span",{children:"+7 Hệ số"})
             ]
           }),
           hud.sneakersT>0&&t.jsxs("div",{
             className:"flex items-center gap-1.5 rounded-2xl px-3 py-1 font-title text-xs font-extrabold",
             style:{backgroundColor:"rgba(22,163,74,0.9)",color:"#FFF",border:"1.5px solid #FFF"},
-            children:[SW.sneakers&&t.jsx("img",{src:SW.sneakers,alt:"",style:{width:22,height:22}}),`${hud.sneakersT}s`]
+            children:[SW.sneakers&&t.jsx("img",{src:SW.sneakers,alt:"",style:{width:22,height:22,objectFit:"contain"}}),`${hud.sneakersT}s`]
           }),
           hud.magnetT>0&&t.jsxs("div",{
             className:"flex items-center gap-1.5 rounded-2xl px-3 py-1 font-title text-xs font-extrabold",
             style:{backgroundColor:"rgba(219,39,119,0.9)",color:"#FFF",border:"1.5px solid #FFF"},
-            children:[SW.magnet&&t.jsx("img",{src:SW.magnet,alt:"",style:{width:22,height:22}}),`${hud.magnetT}s`]
+            children:[SW.magnet&&t.jsx("img",{src:SW.magnet,alt:"",style:{width:22,height:22,objectFit:"contain"}}),`${hud.magnetT}s`]
           }),
           hud.dblT>0&&t.jsxs("div",{
             className:"flex items-center gap-1.5 rounded-2xl px-3 py-1 font-title text-xs font-extrabold",
             style:{backgroundColor:"rgba(202,138,4,0.9)",color:"#FFF",border:"1.5px solid #FFF"},
-            children:[SW.multiplier&&t.jsx("img",{src:SW.multiplier,alt:"",style:{width:22,height:22}}),`${hud.dblT}s`]
+            children:[SW.multiplier&&t.jsx("img",{src:SW.multiplier,alt:"",style:{width:22,height:22,objectFit:"contain"}}),`${hud.dblT}s`]
           })
         ]
       }),
@@ -6250,19 +6323,19 @@ return t.jsxs("div",{
       style:{backgroundColor:"rgba(2,18,32,0.85)"},
       children:t.jsxs("div",{
         className:"flex h-full w-full flex-col justify-between gap-2 rounded-3xl p-4 sticker overflow-hidden",
-        style:{maxWidth:740,maxHeight:460,background:"linear-gradient(180deg,#0C4A6E 0%,#082F49 100%)",border:"3px solid #FACC15",color:"#FFF"},
+        style:{maxWidth:760,maxHeight:470,background:"linear-gradient(180deg,#0C4A6E 0%,#082F49 100%)",border:"3px solid #FACC15",color:"#FFF"},
         children:[
           t.jsxs("div",{
             className:"flex items-center justify-between",
             children:[
               t.jsxs("div",{className:"flex items-center gap-2",children:[
                 SW.app_icon&&t.jsx("img",{src:SW.app_icon,alt:"",style:{width:28,height:28,borderRadius:6}}),
-                t.jsx("span",{className:"font-title text-lg font-extrabold",style:{color:"#FEF08A"},children:"SUBWAY SURFERS 3.71.0 — CREW & HOVERBOARDS"})
+                t.jsx("span",{className:"font-title text-base font-extrabold",style:{color:"#FEF08A"},children:"SUBWAY SURFERS 3.71.0 APK — KHO NHÂN VẬT & VÁN 3D"})
               ]}),
               t.jsxs("div",{className:"flex items-center gap-1.5",children:[
-                t.jsx("button",{onClick:()=>setMeTab("chars"),className:"rounded-full px-3 py-1 font-title text-xs font-extrabold",style:{backgroundColor:meTab==="chars"?"#FACC15":"rgba(255,255,255,0.15)",color:meTab==="chars"?"#451A03":"#FFF"},children:"🏃 14 Nhân Vật"}),
-                t.jsx("button",{onClick:()=>setMeTab("boards"),className:"rounded-full px-3 py-1 font-title text-xs font-extrabold",style:{backgroundColor:meTab==="boards"?"#FACC15":"rgba(255,255,255,0.15)",color:meTab==="boards"?"#451A03":"#FFF"},children:"🛹 10 Ván Trượt"}),
-                t.jsx("button",{onClick:()=>setMeTab("badges"),className:"rounded-full px-3 py-1 font-title text-xs font-extrabold",style:{backgroundColor:meTab==="badges"?"#FACC15":"rgba(255,255,255,0.15)",color:meTab==="badges"?"#451A03":"#FFF"},children:"🏆 Danh Hiệu APK"}),
+                t.jsx("button",{onClick:()=>setMeTab("chars"),className:"rounded-full px-3 py-1 font-title text-xs font-extrabold",style:{backgroundColor:meTab==="chars"?"#FACC15":"rgba(255,255,255,0.15)",color:meTab==="chars"?"#451A03":"#FFF"},children:`🏃 ${APK_CHARS.length} Nhân Vật`}),
+                t.jsx("button",{onClick:()=>setMeTab("boards"),className:"rounded-full px-3 py-1 font-title text-xs font-extrabold",style:{backgroundColor:meTab==="boards"?"#FACC15":"rgba(255,255,255,0.15)",color:meTab==="boards"?"#451A03":"#FFF"},children:`🛹 ${APK_BOARDS.length} Ván 3D`}),
+                t.jsx("button",{onClick:()=>setMeTab("badges"),className:"rounded-full px-3 py-1 font-title text-xs font-extrabold",style:{backgroundColor:meTab==="badges"?"#FACC15":"rgba(255,255,255,0.15)",color:meTab==="badges"?"#451A03":"#FFF"},children:"🏆 Bộ Sưu Tập"}),
                 t.jsx("button",{onClick:()=>setModal(null),className:"rounded-full px-3 py-1 font-title text-xs font-extrabold",style:{backgroundColor:"#E11D48",color:"#FFF"},children:"✕ Đóng"})
               ]})
             ]
@@ -6272,17 +6345,17 @@ return t.jsxs("div",{
             children:[
               t.jsxs("div",{
                 className:"flex flex-col items-center justify-between rounded-2xl p-3 text-center shrink-0",
-                style:{width:195,height:"100%",backgroundColor:"rgba(15,23,42,0.75)",border:"2px solid #38BDF8"},
+                style:{width:190,height:"100%",backgroundColor:"rgba(15,23,42,0.75)",border:"2px solid #38BDF8"},
                 children:[
-                  t.jsx("span",{className:"font-title text-sm font-extrabold",style:{color:"#FEF08A"},children:curChar.name}),
-                  SW[curChar.img]&&t.jsx("img",{src:SW[curChar.img],alt:"",style:{height:190,objectFit:"contain"}}),
+                  t.jsx("span",{className:"font-title text-sm font-extrabold",style:{color:"#FEF08A"},children:`${curChar.name} · ${curChar.outfit}`}),
+                  SW[curChar.altImg||curChar.img]&&t.jsx("img",{src:SW[curChar.altImg||curChar.img],alt:"",style:{height:180,objectFit:"contain"}}),
                   t.jsx("span",{className:"text-[11px] font-bold",style:{color:"#7DD3FC"},children:curChar.perk}),
-                  t.jsx("span",{className:"rounded-full px-3 py-0.5 font-title text-xs font-extrabold",style:{backgroundColor:"#22C55E",color:"#052E16"},children:"✓ Đang chạy"})
+                  t.jsx("span",{className:"rounded-full px-3 py-0.5 font-title text-xs font-extrabold",style:{backgroundColor:"#22C55E",color:"#052E16"},children:curChar.runAnim?"✓ 3D Chạy Mượt":"✓ 3D Model APK"})
                 ]
               }),
               t.jsx("div",{
                 className:"grid flex-1 grid-cols-3 gap-2 overflow-y-auto pr-1",
-                style:{maxHeight:360},
+                style:{maxHeight:375},
                 children:APK_CHARS.map((c,idx)=>t.jsxs("div",{
                   key:c.id,
                   onClick:()=>simRef.current.selectChar&&simRef.current.selectChar(idx),
@@ -6292,11 +6365,11 @@ return t.jsxs("div",{
                     border:charIdx===idx?"2px solid #FACC15":"1.5px solid rgba(125,211,252,0.3)"
                   },
                   children:[
-                    SW[c.img]&&t.jsx("img",{src:SW[c.img],alt:"",style:{width:54,height:64,objectFit:"contain",flexShrink:0}}),
+                    SW[c.img]&&t.jsx("img",{src:SW[c.img],alt:"",style:{width:48,height:58,objectFit:"contain",flexShrink:0}}),
                     t.jsxs("div",{className:"flex flex-col text-left",children:[
                       t.jsx("span",{className:"font-title text-xs font-extrabold",style:{color:"#FEF08A"},children:c.name}),
                       t.jsx("span",{className:"text-[10px] font-bold",style:{color:"#BAE6FD"},children:c.perk}),
-                      t.jsx("span",{className:"mt-1 rounded-full px-2 py-0.5 font-title text-[10px] font-extrabold",style:{backgroundColor:charIdx===idx?"#22C55E":"#38BDF8",color:"#082F49",alignSelf:"flex-start"},children:charIdx===idx?"✓ Đang chọn":"Chọn ngay"})
+                      t.jsx("span",{className:"mt-1 rounded-full px-2 py-0.5 font-title text-[10px] font-extrabold",style:{backgroundColor:charIdx===idx?"#22C55E":"#38BDF8",color:"#082F49",alignSelf:"flex-start"},children:charIdx===idx?"✓ Đang chọn":"Chọn"})
                     ]})
                   ]
                 }))
@@ -6304,40 +6377,40 @@ return t.jsxs("div",{
             ]
           }):meTab==="boards"?t.jsx("div",{
             className:"grid flex-1 grid-cols-2 gap-2 overflow-y-auto pr-1",
-            style:{maxHeight:360},
+            style:{maxHeight:375},
             children:APK_BOARDS.map((b,idx)=>t.jsxs("div",{
               key:b.id,
               onClick:()=>simRef.current.selectBoard&&simRef.current.selectBoard(idx),
-              className:"flex cursor-pointer items-center justify-between rounded-2xl p-3 transition",
+              className:"flex cursor-pointer items-center justify-between rounded-2xl p-2 transition",
               style:{
                 backgroundColor:boardIdx===idx?"rgba(250,204,21,0.25)":"rgba(15,23,42,0.7)",
                 border:boardIdx===idx?"2px solid #FACC15":"1.5px solid rgba(125,211,252,0.3)"
               },
               children:[
-                t.jsxs("div",{className:"flex items-center gap-3",children:[
-                  SW.hoverboard&&t.jsx("img",{src:SW.hoverboard,alt:"",style:{width:48,height:48}}),
-                  SW[b.badge]&&t.jsx("img",{src:SW[b.badge],alt:"",style:{width:32,height:32}}),
+                t.jsxs("div",{className:"flex items-center gap-2",children:[
+                  SW[`b3d_${b.id}`]&&t.jsx("img",{src:SW[`b3d_${b.id}`],alt:"",style:{width:60,height:42,objectFit:"contain",flexShrink:0}}),
+                  SW[b.badge]&&t.jsx("img",{src:SW[b.badge],alt:"",style:{width:24,height:24}}),
                   t.jsxs("div",{className:"text-left",children:[
                     t.jsx("div",{className:"font-title text-xs font-extrabold",style:{color:"#FEF08A"},children:b.name}),
-                    t.jsx("div",{className:"text-[11px] font-bold",style:{color:"#7DD3FC"},children:b.power})
+                    t.jsx("div",{className:"text-[10px] font-bold",style:{color:"#7DD3FC"},children:b.power})
                   ]})
                 ]}),
-                t.jsx("span",{className:"rounded-full px-3 py-1 font-title text-[10px] font-extrabold",style:{backgroundColor:boardIdx===idx?"#22C55E":"#38BDF8",color:"#082F49"},children:boardIdx===idx?"✓ Đang dùng":"Trang bị"})
+                t.jsx("span",{className:"rounded-full px-2 py-0.5 font-title text-[10px] font-extrabold",style:{backgroundColor:boardIdx===idx?"#22C55E":"#38BDF8",color:"#082F49"},children:boardIdx===idx?"✓ Dùng":"Chọn"})
               ]
             }))
           }):t.jsxs("div",{
             className:"flex flex-1 flex-col gap-2 overflow-y-auto pr-1",
-            style:{maxHeight:360},
+            style:{maxHeight:375},
             children:[
               t.jsx("div",{
-                className:"grid grid-cols-4 gap-2",
-                children:["col_1","col_2","col_3","col_4"].map((ck,i)=>t.jsxs("div",{
+                className:"grid grid-cols-3 gap-2",
+                children:["col_1","col_2","col_3","col_4","col_5","col_6"].map((ck,i)=>t.jsxs("div",{
                   key:ck,
                   className:"flex flex-col items-center rounded-2xl p-2 text-center",
                   style:{backgroundColor:"rgba(15,23,42,0.72)",border:"1.5px solid #FACC15"},
                   children:[
-                    SW[ck]&&t.jsx("img",{src:SW[ck],alt:"",style:{height:96,objectFit:"contain"}}),
-                    t.jsx("span",{className:"font-title text-[11px] font-extrabold",style:{color:"#FEF08A"},children:`Bộ Sưu Tập Crew #${i+1}`})
+                    SW[ck]&&t.jsx("img",{src:SW[ck],alt:"",style:{height:88,objectFit:"contain"}}),
+                    t.jsx("span",{className:"font-title text-[11px] font-extrabold",style:{color:"#FEF08A"},children:`Bộ Sưu Tập APK #${i+1}`})
                   ]
                 }))
               }),
@@ -6357,7 +6430,7 @@ return t.jsxs("div",{
                   className:"flex items-center gap-2 rounded-2xl p-2",
                   style:{backgroundColor:"rgba(15,23,42,0.72)",border:"1.5px solid rgba(125,211,252,0.35)"},
                   children:[
-                    SW[bg.k]&&t.jsx("img",{src:SW[bg.k],alt:"",style:{width:42,height:42}}),
+                    SW[bg.k]&&t.jsx("img",{src:SW[bg.k],alt:"",style:{width:38,height:38}}),
                     t.jsx("span",{className:"font-title text-xs font-extrabold",style:{color:"#E0F2FE"},children:bg.t})
                   ]
                 }))
@@ -6372,33 +6445,53 @@ return t.jsxs("div",{
       className:"absolute inset-0 z-30 flex items-center justify-center p-4 backdrop-blur-[2px]",
       style:{backgroundColor:"rgba(2,18,32,0.85)"},
       children:t.jsxs("div",{
-        className:"flex w-full flex-col gap-3 rounded-3xl p-4 sticker",
-        style:{maxWidth:680,background:"linear-gradient(180deg,#1E1B4B 0%,#0F172A 100%)",border:"3px solid #38BDF8",color:"#FFF"},
+        className:"flex w-full flex-col gap-3 rounded-3xl p-4 sticker overflow-hidden",
+        style:{maxWidth:720,maxHeight:465,background:"linear-gradient(180deg,#1E1B4B 0%,#0F172A 100%)",border:"3px solid #38BDF8",color:"#FFF"},
         children:[
           t.jsxs("div",{className:"flex items-center justify-between",children:[
             t.jsxs("div",{className:"flex items-center gap-2",children:[
-              SW.logo_showdown&&t.jsx("img",{src:SW.logo_showdown,alt:"",style:{height:32}}),
-              t.jsx("span",{className:"font-title text-lg font-extrabold",style:{color:"#FEF08A"},children:"WORLD TOUR 3.71.0 — CHỌN THÀNH PHỐ & CHẾ ĐỘ"})
+              SW.splash_showdown&&t.jsx("img",{src:SW.splash_showdown,alt:"",style:{height:34,objectFit:"contain"}}),
+              t.jsx("span",{className:"font-title text-base font-extrabold",style:{color:"#FEF08A"},children:"WORLD TOUR 3.71.0 — BẢN ĐỒ 3D & CHẾ ĐỘ CHƠI"})
             ]}),
             t.jsx("button",{onClick:()=>setModal(null),className:"rounded-full px-3 py-1 font-title text-xs font-extrabold",style:{backgroundColor:"#E11D48",color:"#FFF"},children:"✕ Đóng"})
           ]}),
           t.jsx("div",{
-            className:"grid grid-cols-2 gap-3",
+            className:"grid grid-cols-3 gap-2",
+            children:APK_MODES.map((md,idx)=>t.jsxs("button",{
+              key:md.id,
+              onClick:()=>simRef.current.selectMode&&simRef.current.selectMode(idx),
+              className:"flex items-center gap-2 rounded-2xl p-2 text-left transition",
+              style:{
+                backgroundColor:modeIdx===idx?"rgba(250,204,21,0.22)":"rgba(15,23,42,0.7)",
+                border:modeIdx===idx?"2px solid #FACC15":"1.5px solid rgba(125,211,252,0.3)"
+              },
+              children:[
+                SW[md.banner||"splash_showdown"]&&t.jsx("img",{src:SW[md.banner||"splash_showdown"],alt:"",style:{width:36,height:36,objectFit:"contain",flexShrink:0}}),
+                t.jsxs("div",{className:"flex flex-col",children:[
+                  t.jsx("span",{className:"font-title text-xs font-extrabold",style:{color:"#FEF08A"},children:md.name}),
+                  t.jsx("span",{className:"text-[10px] font-bold",style:{color:"#BAE6FD"},children:md.desc})
+                ]})
+              ]
+            }))
+          }),
+          t.jsx("div",{
+            className:"grid grid-cols-2 gap-2 overflow-y-auto pr-1",
+            style:{maxHeight:295},
             children:APK_CITIES.map((ct,idx)=>t.jsxs("div",{
               key:ct.id,
               onClick:()=>{simRef.current.selectCity&&simRef.current.selectCity(idx);setModal(null);},
-              className:"flex cursor-pointer items-center gap-3 rounded-2xl p-3 transition",
+              className:"flex cursor-pointer items-center gap-3 rounded-2xl p-2 transition",
               style:{
-                backgroundColor:cityIdx===idx?"rgba(56,189,248,0.25)":"rgba(15,23,42,0.75)",
+                backgroundColor:cityIdx===idx?"rgba(56,189,248,0.28)":"rgba(15,23,42,0.75)",
                 border:cityIdx===idx?"2px solid #FACC15":"1.5px solid rgba(125,211,252,0.3)"
               },
               children:[
-                SW[ct.icon]&&t.jsx("img",{src:SW[ct.icon],alt:"",style:{width:56,height:56,objectFit:"contain",flexShrink:0}}),
+                SW[`t_${ct.theme}_prop`]&&t.jsx("img",{src:SW[`t_${ct.theme}_prop`],alt:"",style:{width:46,height:46,objectFit:"contain",flexShrink:0}}),
                 t.jsxs("div",{className:"flex flex-1 flex-col text-left",children:[
                   t.jsx("span",{className:"font-title text-xs font-extrabold",style:{color:"#FEF08A"},children:ct.name}),
-                  t.jsx("span",{className:"text-[11px] font-bold",style:{color:"#BAE6FD"},children:ct.desc})
+                  t.jsx("span",{className:"text-[10px] font-bold",style:{color:"#BAE6FD"},children:ct.desc})
                 ]}),
-                SW[ct.logo]&&t.jsx("img",{src:SW[ct.logo],alt:"",style:{width:64,height:48,objectFit:"contain",flexShrink:0}})
+                SW[`t_${ct.theme}_std`]&&t.jsx("img",{src:SW[`t_${ct.theme}_std`],alt:"",style:{width:44,height:48,objectFit:"contain",flexShrink:0}})
               ]
             }))
           })
@@ -6460,9 +6553,9 @@ return t.jsxs("div",{
         className:"flex w-full flex-col items-center gap-3 rounded-3xl p-5 text-center sticker",
         style:{maxWidth:460,background:"linear-gradient(180deg,#4C1D95 0%,#1E1B4B 100%)",border:"3px solid #FACC15",color:"#FFF"},
         children:[
-          SW.supermysterybox&&t.jsx("img",{src:SW.supermysterybox,alt:"",style:{width:84,height:84}}),
-          t.jsx("h4",{className:"font-title text-2xl font-extrabold",style:{color:"#FEF08A"},children:"MỞ HỘP BÍ ẨN SUBWAY SURFERS!"}),
-          SW[boxReward.icon]&&t.jsx("img",{src:SW[boxReward.icon],alt:"",style:{width:64,height:64}}),
+          SW.supermysterybox&&t.jsx("img",{src:SW.supermysterybox,alt:"",style:{width:92,height:92,objectFit:"contain"}}),
+          t.jsx("h4",{className:"font-title text-2xl font-extrabold",style:{color:"#FEF08A"},children:"MỞ HỘP BÍ ẨN 3D SUBWAY SURFERS!"}),
+          SW[boxReward.icon]&&t.jsx("img",{src:SW[boxReward.icon],alt:"",style:{width:68,height:68,objectFit:"contain"}}),
           t.jsx("p",{className:"font-title text-xl font-extrabold",style:{color:"#7DD3FC"},children:boxReward.title}),
           t.jsxs("div",{className:"flex items-center gap-3",children:[
             t.jsx("button",{
@@ -6489,11 +6582,12 @@ return t.jsxs("div",{
         className:"flex w-full flex-col items-center gap-3 rounded-3xl p-5 text-center sticker",
         style:{maxWidth:460,background:"linear-gradient(180deg,#0C4A6E 0%,#0F172A 100%)",border:"3px solid #38BDF8",color:"#FFF"},
         children:[
-          t.jsxs("div",{className:"flex items-center gap-4",children:[
-            SW.p_guard&&t.jsx("img",{src:SW.p_guard,alt:"",style:{width:72,height:72,borderRadius:16,border:"2px solid #EF4444"}}),
-            SW.keys&&t.jsx("img",{src:SW.keys,alt:"",style:{width:68,height:68}})
+          t.jsxs("div",{className:"flex items-center gap-3",children:[
+            SW.g3d_catch&&t.jsx("img",{src:SW.g3d_catch,alt:"",style:{height:82,objectFit:"contain"}}),
+            SW.d3d_catch&&t.jsx("img",{src:SW.d3d_catch,alt:"",style:{height:58,objectFit:"contain"}}),
+            SW.keys&&t.jsx("img",{src:SW.keys,alt:"",style:{width:64,height:64,objectFit:"contain"}})
           ]}),
-          t.jsx("h4",{className:"font-title text-2xl font-extrabold",style:{color:"#FEF08A"},children:"BỊ THANH TRA BẮT KỊP! CỨU MẠNG?"}),
+          t.jsx("h4",{className:"font-title text-2xl font-extrabold",style:{color:"#FEF08A"},children:"BỊ THANH TRA & CHÓ SĂN BẮT KỊP!"}),
           t.jsx("p",{className:"text-sm font-bold",style:{color:"#E0F2FE"},children:`Bạn đang có ${hud.keys} Chìa Khóa Xanh 🔑 và ${hud.score} điểm!`}),
           t.jsxs("div",{className:"flex items-center gap-3",children:[
             hud.keys>0&&t.jsxs("button",{
@@ -7568,7 +7662,7 @@ return t.jsxs("div",{className:"relative w-full h-full flex flex-col items-cente
   ]})
 ]});
 }
-function GameThumb({id:id}){if(id==="angry"){const _ab=(typeof window!=="undefined"&&window.__AB2__&&window.__AB2__.img)||{};return t.jsxs("div",{className:"relative h-full w-full overflow-hidden",style:{background:"linear-gradient(180deg,#0D1038 0%,#263278 65%,#1E2A5E 100%)"},children:[_ab.moon&&t.jsx("img",{src:_ab.moon,alt:"",style:{position:"absolute",right:10,top:4,width:44,opacity:0.9},draggable:!1}),_ab.th_cobalt_plat&&t.jsx("img",{src:_ab.th_cobalt_plat,alt:"",style:{position:"absolute",left:0,bottom:-10,width:76},draggable:!1}),_ab.th_cobalt_plat&&t.jsx("img",{src:_ab.th_cobalt_plat,alt:"",style:{position:"absolute",right:0,bottom:-8,width:105},draggable:!1}),_ab.sling_front&&t.jsx("img",{src:_ab.sling_front,alt:"",style:{position:"absolute",left:20,bottom:20,height:38},draggable:!1}),_ab.tnt&&t.jsx("img",{src:_ab.tnt,alt:"",style:{position:"absolute",right:24,bottom:24,width:24},draggable:!1}),_ab.king_idle&&t.jsx("img",{src:_ab.king_idle,alt:"",style:{position:"absolute",right:18,bottom:48,width:30},draggable:!1}),_ab.red_idle&&t.jsx("img",{src:_ab.red_idle,alt:"",style:{position:"absolute",left:"42%",top:24,width:34},draggable:!1})]})}if(id==="subway"){const _sw=(typeof window!=="undefined"&&window.__SUBWAY__&&window.__SUBWAY__.img)||{};return t.jsxs("div",{className:"relative h-full w-full overflow-hidden",style:{background:"linear-gradient(180deg,#0284C7 0%,#38BDF8 42%,#334155 42%,#1E293B 100%)"},children:[_sw.train_rails&&t.jsx("img",{src:_sw.train_rails,alt:"",style:{position:"absolute",left:4,bottom:6,width:92,borderRadius:6,border:"1.5px solid #93C5FD",opacity:0.92},draggable:!1}),_sw.char_jake&&t.jsx("img",{src:_sw.char_jake,alt:"",style:{position:"absolute",left:"50%",bottom:2,height:74,transform:"translateX(-45%)"},draggable:!1}),_sw.hoverboard&&t.jsx("img",{src:_sw.hoverboard,alt:"",style:{position:"absolute",right:8,bottom:6,width:38},draggable:!1}),_sw.jetpack&&t.jsx("img",{src:_sw.jetpack,alt:"",style:{position:"absolute",left:10,top:6,width:28},draggable:!1}),_sw.coin&&t.jsx("img",{src:_sw.coin,alt:"",style:{position:"absolute",right:12,top:8,width:22},draggable:!1})]});}if(id==="fish"){const _bc=(typeof window!=="undefined"&&window.__BANCA__)||{};const _bg=(_bc.maps&&_bc.maps.shipwreck)||(_bc.maps&&_bc.maps.coral)||"";return t.jsxs("div",{className:"relative h-full w-full overflow-hidden",style:{background:_bg?`url(${_bg}) center/cover no-repeat`:"linear-gradient(180deg,#1CB5E0 0,#06345A 78%,#AA844E 78%,#5F4523 100%)"},children:[t.jsx("div",{style:{position:"absolute",inset:0,background:"radial-gradient(circle at 50% 35%,transparent 35%,rgba(2,18,32,0.45) 100%)"}}),t.jsx("span",{className:"rounded-full px-2 py-0.5 font-title text-[10px] font-extrabold",style:{position:"absolute",left:8,top:6,backgroundColor:"rgba(250,204,21,0.95)",color:"#5A1A3A",boxShadow:"0 2px 6px rgba(0,0,0,0.35)"},children:"BẮN CÁ ĂN XU"}),t.jsx("img",{src:A("bubbles"),alt:"",style:{position:"absolute",right:10,top:10,width:24},draggable:!1}),t.jsx("img",{src:A("coin",!0),alt:"",style:{position:"absolute",left:12,bottom:10,width:20},draggable:!1})]});}
+function GameThumb({id:id}){if(id==="angry"){const _ab=(typeof window!=="undefined"&&window.__AB2__&&window.__AB2__.img)||{};return t.jsxs("div",{className:"relative h-full w-full overflow-hidden",style:{background:"linear-gradient(180deg,#0D1038 0%,#263278 65%,#1E2A5E 100%)"},children:[_ab.moon&&t.jsx("img",{src:_ab.moon,alt:"",style:{position:"absolute",right:10,top:4,width:44,opacity:0.9},draggable:!1}),_ab.th_cobalt_plat&&t.jsx("img",{src:_ab.th_cobalt_plat,alt:"",style:{position:"absolute",left:0,bottom:-10,width:76},draggable:!1}),_ab.th_cobalt_plat&&t.jsx("img",{src:_ab.th_cobalt_plat,alt:"",style:{position:"absolute",right:0,bottom:-8,width:105},draggable:!1}),_ab.sling_front&&t.jsx("img",{src:_ab.sling_front,alt:"",style:{position:"absolute",left:20,bottom:20,height:38},draggable:!1}),_ab.tnt&&t.jsx("img",{src:_ab.tnt,alt:"",style:{position:"absolute",right:24,bottom:24,width:24},draggable:!1}),_ab.king_idle&&t.jsx("img",{src:_ab.king_idle,alt:"",style:{position:"absolute",right:18,bottom:48,width:30},draggable:!1}),_ab.red_idle&&t.jsx("img",{src:_ab.red_idle,alt:"",style:{position:"absolute",left:"42%",top:24,width:34},draggable:!1})]})}if(id==="subway"){const _sw=(typeof window!=="undefined"&&window.__SUBWAY__&&window.__SUBWAY__.img)||{};return t.jsxs("div",{className:"relative h-full w-full overflow-hidden",style:{background:"linear-gradient(180deg,#0284C7 0%,#38BDF8 45%,#334155 45%,#0F172A 100%)"},children:[_sw.t_shenzhen_sub&&t.jsx("img",{src:_sw.t_shenzhen_sub,alt:"",style:{position:"absolute",left:6,bottom:4,height:64,objectFit:"contain"},draggable:!1}),_sw.t_shenzhen_freight&&t.jsx("img",{src:_sw.t_shenzhen_freight,alt:"",style:{position:"absolute",right:6,bottom:4,height:60,objectFit:"contain"},draggable:!1}),_sw.char_jake_star&&t.jsx("img",{src:_sw.char_jake_star,alt:"",style:{position:"absolute",left:"50%",bottom:2,height:74,transform:"translateX(-48%)",objectFit:"contain"},draggable:!1}),_sw.b3d_dragon&&t.jsx("img",{src:_sw.b3d_dragon,alt:"",style:{position:"absolute",right:8,top:10,width:42,objectFit:"contain"},draggable:!1}),_sw.jetpack&&t.jsx("img",{src:_sw.jetpack,alt:"",style:{position:"absolute",left:10,top:6,width:30,objectFit:"contain"},draggable:!1}),_sw.coin&&t.jsx("img",{src:_sw.coin,alt:"",style:{position:"absolute",right:14,bottom:10,width:22},draggable:!1})]});}if(id==="fish"){const _bc=(typeof window!=="undefined"&&window.__BANCA__)||{};const _bg=(_bc.maps&&_bc.maps.shipwreck)||(_bc.maps&&_bc.maps.coral)||"";return t.jsxs("div",{className:"relative h-full w-full overflow-hidden",style:{background:_bg?`url(${_bg}) center/cover no-repeat`:"linear-gradient(180deg,#1CB5E0 0,#06345A 78%,#AA844E 78%,#5F4523 100%)"},children:[t.jsx("div",{style:{position:"absolute",inset:0,background:"radial-gradient(circle at 50% 35%,transparent 35%,rgba(2,18,32,0.45) 100%)"}}),t.jsx("span",{className:"rounded-full px-2 py-0.5 font-title text-[10px] font-extrabold",style:{position:"absolute",left:8,top:6,backgroundColor:"rgba(250,204,21,0.95)",color:"#5A1A3A",boxShadow:"0 2px 6px rgba(0,0,0,0.35)"},children:"BẮN CÁ ĂN XU"}),t.jsx("img",{src:A("bubbles"),alt:"",style:{position:"absolute",right:10,top:10,width:24},draggable:!1}),t.jsx("img",{src:A("coin",!0),alt:"",style:{position:"absolute",left:12,bottom:10,width:20},draggable:!1})]});}
 if(id==="gold")return t.jsxs("div",{className:"relative h-full w-full overflow-hidden",style:{background:"linear-gradient(180deg,#BCE6FF 0%,#BCE6FF 30%,#8B4F21 30%,#4A260D 100%)"},children:[t.jsx("div",{style:{position:"absolute",left:"50%",top:18,width:2,height:36,background:"#2E1A0F",transform:"translateX(-50%) rotate(-12deg)",transformOrigin:"top center"}}),t.jsx("img",{src:A("rabbit-face"),alt:"",style:{position:"absolute",left:"50%",top:4,width:26,transform:"translateX(-50%)"},draggable:!1}),t.jsx("img",{src:A("coin",!0),alt:"",style:{position:"absolute",left:24,bottom:18,width:30},draggable:!1}),t.jsx("img",{src:A("gem",!0),alt:"",style:{position:"absolute",right:24,bottom:26,width:26},draggable:!1}),t.jsx("img",{src:A("bomb",!0),alt:"",style:{position:"absolute",left:"52%",bottom:10,width:22},draggable:!1})]});if(id==="catch")return t.jsxs("div",{className:"relative h-full w-full overflow-hidden",style:{background:"linear-gradient(180deg,#FFD3E6 0%,#FFF3F8 78%,#8BCF8F 78%,#6FBF73 100%)"},children:[t.jsx("img",{src:A("tulip"),alt:"",style:{position:"absolute",left:18,top:14,width:26},draggable:!1}),t.jsx("img",{src:A("carrot"),alt:"",style:{position:"absolute",right:24,top:20,width:26},draggable:!1}),t.jsx("img",{src:A("rain-cloud"),alt:"",style:{position:"absolute",left:"52%",top:8,width:28},draggable:!1}),t.jsx("img",{src:A("rabbit",!0),alt:"",style:{position:"absolute",left:"50%",bottom:10,width:48,transform:"translateX(-50%)"},draggable:!1})]});if(id==="bubble")return t.jsxs("div",{className:"relative flex h-full w-full items-center justify-center overflow-hidden",style:{background:"linear-gradient(135deg,#D8F3FF,#A2DCFF)"},children:[t.jsx("img",{src:"./photos/02.jpg",alt:"",style:{position:"absolute",inset:10,width:"calc(100% - 20px)",height:"calc(100% - 20px)",objectFit:"cover",borderRadius:12,opacity:.45},draggable:!1}),t.jsx("div",{style:{display:"grid",gridTemplateColumns:"repeat(4,24px)",gap:5,position:"relative"},children:Array.from({length:12},(_,i)=>t.jsx("div",{style:{width:24,height:24,borderRadius:"50%",background:i===5?"radial-gradient(circle at 30% 30%,#fff,#FFD66B)":"radial-gradient(circle at 30% 30%,#fff,#FF8EC2)",opacity:i===2||i===9?.25:.9,boxShadow:"0 2px 5px rgba(90,26,58,0.2)"}},i))})]});if(id==="quiz")return t.jsxs("div",{className:"relative flex h-full w-full flex-col items-center justify-center gap-1.5 p-3",style:{background:"linear-gradient(135deg,#FFF3C4,#FFD66B)"},children:[t.jsx("img",{src:A("hundred",!0),alt:"",style:{width:36,marginBottom:2},draggable:!1}),t.jsx("div",{style:{display:"grid",gridTemplateColumns:"1fr 1fr",gap:5,width:"86%"},children:["A","B","C","D"].map((k,i)=>t.jsx("div",{style:{borderRadius:8,padding:"3px 6px",fontSize:10,fontWeight:800,backgroundColor:i===1?"#48C774":"#FFFFFF",color:i===1?"#fff":"#5A1A3A",boxShadow:"0 2px 4px rgba(0,0,0,0.08)"},children:`${k}. ♥`},k))})]});if(id==="memory")return t.jsxs("div",{className:"relative flex h-full w-full items-center justify-center gap-2",style:{background:"linear-gradient(135deg,#EFE4FF,#C9A7FF)"},children:[t.jsx("div",{style:{width:38,height:52,borderRadius:8,background:"linear-gradient(135deg,#FFC2D9,#FF7EB6)",display:"grid",placeItems:"center",transform:"rotate(-8deg)",boxShadow:"0 4px 8px rgba(0,0,0,0.18)"},children:t.jsx("img",{src:A("rabbit-face"),alt:"",style:{width:22},draggable:!1})}),t.jsx("div",{style:{width:42,height:56,borderRadius:8,overflow:"hidden",border:"2px solid #fff",boxShadow:"0 4px 10px rgba(0,0,0,0.2)"},children:t.jsx("img",{src:"./photos/03.jpg",alt:"",style:{width:"100%",height:"100%",objectFit:"cover"},draggable:!1})}),t.jsx("div",{style:{width:38,height:52,borderRadius:8,background:"linear-gradient(135deg,#FFC2D9,#FF7EB6)",display:"grid",placeItems:"center",transform:"rotate(8deg)",boxShadow:"0 4px 8px rgba(0,0,0,0.18)"},children:t.jsx("img",{src:A("rabbit-face"),alt:"",style:{width:22},draggable:!1})})]});if(id==="piano")return t.jsxs("div",{className:"relative h-full w-full overflow-hidden",style:{background:"linear-gradient(180deg,#FFF0F6,#FFE0EC)",display:"grid",gridTemplateColumns:"repeat(4,1fr)"},children:[[0,1,2,3].map(i=>t.jsx("div",{style:{borderRight:i<3?"1px solid rgba(255,126,182,0.28)":"none",backgroundColor:i%2?"rgba(255,255,255,0.45)":"transparent"}},i)),t.jsx("div",{style:{position:"absolute",left:0,right:0,bottom:16,height:14,backgroundColor:"rgba(255,255,255,0.8)",borderTop:"2px solid #FF7EB6",borderBottom:"2px solid #FF7EB6"}}),t.jsx("img",{src:A("pink-heart"),alt:"",style:{position:"absolute",left:"14%",top:14,width:24},draggable:!1}),t.jsx("img",{src:A("cherry-blossom"),alt:"",style:{position:"absolute",left:"40%",top:46,width:24},draggable:!1}),t.jsx("img",{src:A("carrot"),alt:"",style:{position:"absolute",left:"68%",bottom:14,width:24},draggable:!1})]});if(id==="stack")return t.jsxs("div",{className:"relative flex h-full w-full flex-col items-center justify-end pb-3",style:{background:"linear-gradient(180deg,#FFF0F6,#FFE0CB)"},children:[t.jsx("div",{style:{width:46,height:13,borderRadius:5,background:"#8EE3B6",marginBottom:8,transform:"translateX(14px)",boxShadow:"0 2px 4px rgba(0,0,0,0.15)"}}),t.jsx("div",{style:{width:54,height:13,borderRadius:5,background:"#B98CFF",marginBottom:2}}),t.jsx("div",{style:{width:68,height:13,borderRadius:5,background:"#FFD66B",marginBottom:2}}),t.jsx("div",{style:{width:86,height:14,borderRadius:5,background:"#FF7EB6"}})]});if(id==="tsunami")return t.jsxs("div",{className:"relative h-full w-full overflow-hidden",style:{background:"linear-gradient(180deg,#2A1035,#5A226E)"},children:[t.jsx("div",{style:{position:"absolute",left:12,bottom:28,width:20,height:48,background:"#1D0926"}}),t.jsx("div",{style:{position:"absolute",left:38,bottom:28,width:26,height:64,background:"#1D0926"}}),t.jsx("div",{style:{position:"absolute",right:20,bottom:28,width:24,height:54,background:"#1D0926"}}),t.jsx("div",{style:{position:"absolute",left:0,right:0,bottom:0,height:28,background:"#5A1A3A",borderTop:"3px solid #FF7EB6"}}),t.jsx("img",{src:A("rabbit"),alt:"",style:{position:"absolute",left:18,bottom:24,width:28,transform:"scaleX(-1)"},draggable:!1}),t.jsx("img",{src:A("rabbit"),alt:"",style:{position:"absolute",left:44,bottom:34,width:28,transform:"scaleX(-1)"},draggable:!1}),t.jsx("img",{src:A("gift-box"),alt:"",style:{position:"absolute",right:24,bottom:26,width:30},draggable:!1}),t.jsx("img",{src:A("carrot"),alt:"",style:{position:"absolute",left:"56%",top:22,width:22},draggable:!1})]});if(id==="shooter")return t.jsxs("div",{className:"relative h-full w-full overflow-hidden",style:{background:"linear-gradient(180deg,#140622,#321149)"},children:[t.jsx("img",{src:A("rain-cloud"),alt:"",style:{position:"absolute",left:22,top:14,width:26},draggable:!1}),t.jsx("img",{src:A("planet"),alt:"",style:{position:"absolute",left:"50%",top:12,width:28,transform:"translateX(-50%)"},draggable:!1}),t.jsx("img",{src:A("rain-cloud"),alt:"",style:{position:"absolute",right:22,top:14,width:26},draggable:!1}),t.jsx("div",{style:{position:"absolute",left:"44%",top:48,width:4,height:14,borderRadius:2,background:"#FF7EB6",boxShadow:"0 0 8px #FF7EB6"}}),t.jsx("div",{style:{position:"absolute",left:"54%",top:48,width:4,height:14,borderRadius:2,background:"#FF7EB6",boxShadow:"0 0 8px #FF7EB6"}}),t.jsx("img",{src:A("rabbit-face"),alt:"",style:{position:"absolute",left:"50%",bottom:10,width:32,transform:"translateX(-50%)"},draggable:!1})]});return t.jsx("div",{className:"relative flex h-full w-full items-center justify-center",style:{background:"linear-gradient(135deg,#250E38,#4A1E6B)"},children:t.jsx("div",{style:{display:"grid",gridTemplateColumns:"repeat(4,18px)",gap:3,padding:6,borderRadius:10,background:"#36184C",border:"1.5px solid rgba(255,126,182,0.4)"},children:[0,1,2,2,0,3,3,2,4,4,1,2,4,5,5,5].map((c,i)=>t.jsx("div",{style:{width:18,height:18,borderRadius:4,background:i===0||i===1||i===11?"rgba(255,255,255,0.1)":c===2?"linear-gradient(135deg,#A6D5FF,#4DA6FF)":c===3?"linear-gradient(135deg,#FFC2DC,#FF6BA8)":c===4?"linear-gradient(135deg,#FFE699,#FFA93A)":"linear-gradient(135deg,#A8F0C0,#48C774)"}},i))})})}function it(){const[r,g]=x.useState(null),GAMES=[{id:"catch",title:o.playground.tabs.catch,sub:"Hứng hoa kiếm xu",tag:""},{id:"bubble",title:o.playground.tabs.bubble,sub:"Nổ bóng tìm ảnh",tag:""},{id:"quiz",title:o.playground.tabs.quiz,sub:"Hiểu anh bao nhiêu?",tag:""},{id:"memory",title:o.playground.tabs.memory,sub:"Lật cặp ảnh đôi",tag:""},{id:"piano",title:o.playground.tabs.piano,sub:"Chạm nhịp giai điệu",tag:"MỚI"},{id:"stack",title:o.playground.tabs.stack,sub:"Chồng tầng bánh kem",tag:"MỚI"},{id:"tsunami",title:o.playground.tabs.tsunami,sub:"Chạy nhảy theo bầy",tag:"HOT"},{id:"shooter",title:o.playground.tabs.shooter,sub:"Bắn UFO vũ trụ",tag:"HOT"},{id:"gems",title:o.playground.tabs.gems,sub:"Xếp khối ăn hàng",tag:"MỚI"},{id:"gold",title:o.playground.tabs.gold,sub:"Kéo vàng & mua đồ",tag:"HOT"},{id:"fish",title:o.playground.tabs.fish,sub:"Săn cá đại dương",tag:"HOT"},{id:"subway",title:o.playground.tabs.subway,sub:"Chạy 3 làn né xe",tag:"HOT"},{id:"angry",title:o.playground.tabs.angry,sub:"Kéo ná bắn heo xanh",tag:"HOT"}];const cur=GAMES.find(v=>v.id===r);return t.jsxs(Ve,{children:[t.jsx(Ze,{}),t.jsxs("div",{className:"playground-container relative z-10 flex h-full flex-col items-center pt-24",children:[t.jsxs("div",{className:"flex items-center gap-3",children:[r&&t.jsx(pe,{variant:"soft",className:"!py-1.5 !px-4 !text-sm",onClick:()=>g(null),children:"← Chọn trò khác"}),t.jsx(Ke,{text:cur?cur.title:o.playground.title,className:"text-4xl text-candy"})]}),r===null?t.jsxs("div",{className:"mt-4 w-full px-4 pb-8",style:{maxWidth:980},children:[t.jsxs("div",{className:"mb-3 flex items-center gap-2",children:[t.jsx("span",{className:"font-title text-xl font-extrabold text-berry",children:"Tất cả trò chơi"}),t.jsx("span",{className:"rounded-full px-3 py-0.5 font-title text-xs font-extrabold text-white",style:{backgroundColor:"#FF5FA2"},children:`${GAMES.length} TRÒ`})]}),t.jsx("div",{style:{display:"grid",gridTemplateColumns:"repeat(auto-fill, minmax(175px, 1fr))",gap:16},children:GAMES.map((gm,idx)=>t.jsxs(B.button,{onClick:()=>{m.click(),g(gm.id)},initial:{opacity:0,y:16,scale:.95},animate:{opacity:1,y:0,scale:1},transition:{delay:idx*.03,type:"spring",stiffness:320,damping:22},whileHover:{y:-6,scale:1.03},whileTap:{scale:.97},className:"group relative flex flex-col overflow-hidden text-left sticker",style:{borderRadius:22,backgroundColor:"#FFFFFF",border:"2px solid rgba(255,255,255,0.95)",boxShadow:"0 10px 24px rgba(90,26,58,0.12)"},children:[t.jsxs("div",{className:"relative w-full overflow-hidden",style:{height:118},children:[gm.tag&&t.jsx("span",{style:{position:"absolute",left:8,top:8,zIndex:10,borderRadius:999,padding:"2px 10px",fontSize:11,fontWeight:800,color:"#FFFFFF",backgroundColor:gm.tag==="HOT"?"#FF5FA2":"#2E7D52",boxShadow:"0 2px 6px rgba(0,0,0,0.22)"},children:gm.tag}),t.jsx(GameThumb,{id:gm.id})]}),t.jsxs("div",{className:"flex w-full flex-col px-3.5 py-2.5",style:{backgroundColor:"#FFFFFF"},children:[t.jsx("div",{className:"truncate font-title text-base font-extrabold text-berry",children:gm.title}),t.jsx("div",{className:"truncate font-body text-xs font-bold",style:{color:"rgba(90,26,58,0.55)"},children:gm.sub})]})]},gm.id))})]}):t.jsx("div",{className:"mt-4 flex flex-1 items-start",children:t.jsx(ee,{mode:"wait",children:t.jsx(B.div,{initial:{y:24,opacity:0},animate:{y:0,opacity:1},exit:{y:-16,opacity:0},transition:{type:"spring",stiffness:300,damping:26},children:r==="catch"?t.jsx(st,{}):r==="bubble"?t.jsx(at,{}):r==="quiz"?t.jsx(nt,{}):r==="memory"?t.jsx(ot,{}):r==="piano"?t.jsx(pianoGame,{}):r==="stack"?t.jsx(stackGame,{}):r==="tsunami"?t.jsx(tsunamiGame,{}):r==="shooter"?t.jsx(shooterGame,{}):r==="gems"?t.jsx(gemsGame,{}):r==="gold"?t.jsx(goldMinerGame,{}):r==="fish"?t.jsx(fishHunterGame,{}):r==="subway"?t.jsx(subwayRunnerGame,{}):t.jsx(angryBirdsGame,{})},r)})})]})]})}
   window.__STATIC_MODULES__['Playground'] = {
     "default": it
